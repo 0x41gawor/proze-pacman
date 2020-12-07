@@ -1,8 +1,6 @@
 # Config parser
 
-
-
-### Używamy pliku `config.properties `,w którym zamisćlisiśmu listę wszystkich używanych przez nas danych:
+Używamy pliku `config.properties`w którym zamieściliśmy listę wszystkich używanych przez nas danych:
 
 
 
