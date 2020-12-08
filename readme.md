@@ -30,6 +30,7 @@ Uruchamiając aplikację pokazuje nam się główne menu.  Pozwalające wybrać 
 
 ![level](res/img/level.png)
 
-### Pogląd menu
+## Podgląd menu
 
 ![menu](res/img/menu.png)
+

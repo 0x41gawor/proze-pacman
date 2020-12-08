@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"com.pacman.app","l":"App"},{"p":"com.pacman.config","l":"Config"},{"p":"com.pacman.map","l":"Map"}];updateSearchResults();
