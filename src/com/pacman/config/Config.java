@@ -47,7 +47,7 @@ public class Config {
      @param fileName - name of  file
      @return FileInputStream
      */
-    public static InputStream loadConfig(String fileName)  {
+    private static InputStream loadConfig(String fileName)  {
         InputStream is=null;
         try{
             is = new FileInputStream(fileName);
