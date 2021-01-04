@@ -61,9 +61,9 @@ public class Player extends Rectangle {
      * Update player positions
      * Should be called in GamePanel.paint()
      */
-    public void _update() {
-        posX = posX + movementX * movementSpeedX;
-        posY = posY + movementY * movementSpeedY;
+    public void _update(double dt) {
+        posX = posX + movementX * movementSpeedX * dt;
+        posY = posY + movementY * movementSpeedY * dt;
     }
     /**
      * Set player direction depending on the keys pressed by the user

@@ -2,6 +2,7 @@ package com.pacman.ui;
 
 import com.pacman.config.Config;
 import com.pacman.model.Player;
+import com.pacman.ui.util.Clock;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,6 +49,8 @@ public class GamePanel extends JPanel implements Runnable {
      */
     Player player;
 
+    Clock clock;
+
     //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
      Default Constructor
@@ -58,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
         screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
         player = new Player(100,100,Config.PLAYER_SIZE,Config.PLAYER_SIZE,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
         // Setting up JPanel
+        clock = new Clock();
         this.setFocusable(true); //they say it is focusable by default
         this.addKeyListener(new KeyboardHandler());
         this.addComponentListener(new ResizeHandler());
@@ -75,8 +79,10 @@ public class GamePanel extends JPanel implements Runnable {
      */
     @Override
     public void run() {
+        double dt;
         while(true) {
-            _update();
+            dt = clock.restart();
+            _update(dt);
             repaint();
             sleep();
         }
@@ -86,8 +92,8 @@ public class GamePanel extends JPanel implements Runnable {
      Compute new positions for graphic components, check collisions etc...
      Every object should have it's _update() method to be called here.
      */
-    private void _update() {
-        player._update();
+    private void _update(double dt) {
+        player._update(dt);
     }
     /**
      Paint the frame.
