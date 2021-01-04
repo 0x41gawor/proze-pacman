@@ -30,11 +30,27 @@ public class Config {
      */
     public static int MAP_SIZE_Y;
     /**
-     Size of single tile
-     Just one value because tile is a rectangle
+     Horizontal size of a single tile
      */
-    public static int GRID;
-
+    public static int GRID_X;
+    /**
+     Vertical size of a single tile
+     */
+    public static int GRID_Y;
+    /**
+     Frames per second
+     */
+    public static float FPS;
+    /**
+     Pac-man size. Only one value because pac-man is circle shaped.
+     */
+    public static int PLAYER_SIZE;
+    /**
+     * player movement speed is expressed in px/s
+     * In game as a speed reference we will use GRID size
+     */
+    public static int PLAYER_MOVEMENT_SPEED_X;
+    public static int PLAYER_MOVEMENT_SPEED_Y;
     /**
      Default Constructor
      */
@@ -75,6 +91,13 @@ public class Config {
         WINDOW_SIZE_Y = Integer.parseInt(properties.getProperty("WINDOW_SIZE_Y"));
         MAP_SIZE_X = Integer.parseInt(properties.getProperty("MAP_SIZE_X"));
         MAP_SIZE_Y = Integer.parseInt(properties.getProperty("MAP_SIZE_Y"));
-        GRID = Integer.parseInt(properties.getProperty("GRID"));
+        GRID_X = Integer.parseInt(properties.getProperty("GRID_X"));
+        GRID_Y = Integer.parseInt(properties.getProperty("GRID_Y"));
+        FPS = Float.parseFloat(properties.getProperty("FPS"));
+        PLAYER_SIZE = Integer.parseInt(properties.getProperty("PLAYER_SIZE"));
+
+        PLAYER_MOVEMENT_SPEED_X = 1*GRID_X;
+        PLAYER_MOVEMENT_SPEED_Y = 1*GRID_Y;
+
     }
 }

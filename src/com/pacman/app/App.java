@@ -2,6 +2,7 @@ package com.pacman.app;
 
 import com.pacman.config.Config;
 import com.pacman.map.Map;
+import com.pacman.ui.GameFrame;
 
 /**
  * Main class for our app
@@ -11,10 +12,8 @@ import com.pacman.map.Map;
 public class App {
 
     public static void main(String[] args) {
-        Config.parseConfig("config.properties");
 
-        Map maze = new Map();
-        maze.loadFromFile("level1.txt");
-        maze.showMapOnConsole();
+        Config.parseConfig("config.properties");
+        GameFrame frame = new GameFrame();
     }
 }
