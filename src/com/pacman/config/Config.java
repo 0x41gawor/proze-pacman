@@ -96,8 +96,8 @@ public class Config {
         FPS = Float.parseFloat(properties.getProperty("FPS"));
         PLAYER_SIZE = Integer.parseInt(properties.getProperty("PLAYER_SIZE"));
 
-        PLAYER_MOVEMENT_SPEED_X = 1*GRID_X;
-        PLAYER_MOVEMENT_SPEED_Y = 1*GRID_Y;
+        PLAYER_MOVEMENT_SPEED_X = 6*GRID_X;
+        PLAYER_MOVEMENT_SPEED_Y = 6*GRID_Y;
 
     }
 }
