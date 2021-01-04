@@ -157,15 +157,14 @@ public class GamePanel extends JPanel implements Runnable {
         public void componentResized(ComponentEvent e) {
             Dimension oldScreenSize = screenSize;
             screenSize = e.getComponent().getSize();
-            newConstantValues();
+            newConfigValues();
             resizePlayer(oldScreenSize);
         }
         /**
-         * Resizing window means to resize GRID
-         * Because we need to keep constant ratio between WINDOW_SIZE and GRID
-         * Which is btw. MAP_SIZE
+         * Resizing window means to resize GRID, and all things that depend on this
+         * Because we need to keep constant ratio between WINDOW_SIZE and GRID (Which is btw. MAP_SIZE)
          */
-        private void newConstantValues() {
+        private void newConfigValues() {
             Config.WINDOW_SIZE_X = screenSize.width;
             Config.WINDOW_SIZE_Y = screenSize.height;
             Config.GRID_X = Config.WINDOW_SIZE_X / Config.MAP_SIZE_X;
@@ -177,7 +176,6 @@ public class GamePanel extends JPanel implements Runnable {
         }
         /**
          * Resizing window means to resize PLAYER_SIZE and change his position
-         *
          * Because if player stands 100px from the left and user resize window to be double sized
          * now player should stand 200px from the left border.
          * Also player movementSpeed changes because player should always
@@ -187,7 +185,6 @@ public class GamePanel extends JPanel implements Runnable {
             player.setSize(screenSize.width/(Config.WINDOW_SIZE_X/Config.GRID_X),screenSize.height/(Config.WINDOW_SIZE_Y/Config.GRID_Y));
             player.set_posX(player.get_posX() / (double)oldScreenSize.width * (double)screenSize.width);
             player.set_posY(player.get_posY() / (double)oldScreenSize.height * (double)screenSize.height);
-
             player.set_movementSpeedX( Config.PLAYER_MOVEMENT_SPEED_X );
             player.set_movementSpeedY( Config.PLAYER_MOVEMENT_SPEED_Y );
         }
