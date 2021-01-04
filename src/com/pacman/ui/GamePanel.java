@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
-     * determine if game is pause
+     * Determine if the gameplay is paused
      */
      boolean isPause = false;
     /**
@@ -78,7 +78,6 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
     }
-
     //------------------------------------------------------------------------------------------------------------------ G A M E   M A I N   L O O P
     /**
      Run method from Runnable interface
@@ -94,7 +93,6 @@ public class GamePanel extends JPanel implements Runnable {
             sleep();
         }
     }
-
     /**
      Update the game.
      Compute new positions for graphic components, check collisions etc...
@@ -113,12 +111,10 @@ public class GamePanel extends JPanel implements Runnable {
         // Background
         g.setColor(Color.black);
         g.fillRect(0,0,screenSize.width,screenSize.height);
-
         if(isPause) {
             g.setColor(Color.red);                              /// todo: change into inscription
             g.fillOval(200,200,200,200);
         }
-
         // Objects
         // Every object should have it's draw() method called here
         player.draw(g);
@@ -136,7 +132,6 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (InterruptedException ignored) {
         }
     }
-
     //------------------------------------------------------------------------------------------------------------------ A U X   G A M E
     //------------------------------------------------------------------------------------------------------------------ A U X   S W I N G
     /**
@@ -146,7 +141,6 @@ public class GamePanel extends JPanel implements Runnable {
     public Dimension getPreferredSize() {
         return screenSize;
     }
-
     /**
      * Set game into pause mode or resume the game
      */
@@ -158,7 +152,6 @@ public class GamePanel extends JPanel implements Runnable {
             isPause = false;
         }
     }
-
     //------------------------------------------------------------------------------------------------------------------ N E S T E D   C L A S S E S
     /**
      * This class handles every keyboard input during the game.
