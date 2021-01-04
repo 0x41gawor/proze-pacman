@@ -49,8 +49,8 @@ public class GamePanel extends JPanel implements Runnable {
      */
     Player player;
     /**
-     Class to measure time between two loops.
-     This time is used to define speed of pacman.
+     Measure time between frames.
+     Used to keep constant speed of objects independently from FPS.
      */
     Clock clock;
 
