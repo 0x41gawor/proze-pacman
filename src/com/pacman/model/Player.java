@@ -64,6 +64,7 @@ public class Player extends Rectangle {
     public void _update(double dt) {
         posX = posX + movementX * movementSpeedX * dt;
         posY = posY + movementY * movementSpeedY * dt;
+
     }
     /**
      * Set player direction depending on the keys pressed by the user
