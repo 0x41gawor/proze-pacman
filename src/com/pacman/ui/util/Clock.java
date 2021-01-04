@@ -16,16 +16,14 @@ public class Clock {
      * DeltaTime between last and now
      */
     double dt;
-
     /**
-     * Deafult construktor
-     */
+     * Default constructor
+     *
     public Clock() {
         last = System.nanoTime();
         now = last;
         dt = 0.f;
     }
-
     /**
      * Returns the time between this call and the last one
      */
