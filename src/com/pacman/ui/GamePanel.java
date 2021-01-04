@@ -62,7 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
     GamePanel() {
         // Setting up the Game
         screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
-        player = new Player(100,100,Config.PLAYER_SIZE,Config.PLAYER_SIZE,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
+        player = new Player(100,100,Config.PLAYER_SIZE_X,Config.PLAYER_SIZE_Y,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
         // Setting up JPanel
         clock = new Clock();
         this.setFocusable(true); //they say it is focusable by default
@@ -155,8 +155,38 @@ public class GamePanel extends JPanel implements Runnable {
      */
     public class ResizeHandler extends ComponentAdapter {
         public void componentResized(ComponentEvent e) {
+            Dimension oldScreenSize = screenSize;
             screenSize = e.getComponent().getSize();
-            System.out.println("Resized to " + screenSize);
+            newConfigValues();
+            resizePlayer(oldScreenSize);
+        }
+        /**
+         * Resizing window means to resize GRID, and all things that depend on this
+         * Because we need to keep constant ratio between WINDOW_SIZE and GRID (Which is btw. MAP_SIZE)
+         */
+        private void newConfigValues() {
+            Config.WINDOW_SIZE_X = screenSize.width;
+            Config.WINDOW_SIZE_Y = screenSize.height;
+            Config.GRID_X = Config.WINDOW_SIZE_X / Config.MAP_SIZE_X;
+            Config.GRID_Y = Config.WINDOW_SIZE_Y / Config.MAP_SIZE_Y;
+            Config.PLAYER_MOVEMENT_SPEED_X = 6 * Config.GRID_X;
+            Config.PLAYER_MOVEMENT_SPEED_Y = 6 * Config.GRID_Y;
+            Config.PLAYER_SIZE_X = Config.GRID_X;
+            Config.PLAYER_SIZE_Y = Config.GRID_Y;
+        }
+        /**
+         * Resizing window means to resize PLAYER_SIZE and change his position
+         * Because if player stands 100px from the left and user resize window to be double sized
+         * now player should stand 200px from the left border.
+         * Also player movementSpeed changes because player should always
+         * need the same amount of time to cover the distance of the entire map
+         */
+        private void resizePlayer(Dimension oldScreenSize) {
+            player.setSize(screenSize.width/(Config.WINDOW_SIZE_X/Config.GRID_X),screenSize.height/(Config.WINDOW_SIZE_Y/Config.GRID_Y));
+            player.set_posX(player.get_posX() / (double)oldScreenSize.width * (double)screenSize.width);
+            player.set_posY(player.get_posY() / (double)oldScreenSize.height * (double)screenSize.height);
+            player.set_movementSpeedX( Config.PLAYER_MOVEMENT_SPEED_X );
+            player.set_movementSpeedY( Config.PLAYER_MOVEMENT_SPEED_Y );
         }
     }
 }

@@ -42,9 +42,13 @@ public class Config {
      */
     public static float FPS;
     /**
-     Pac-man size. Only one value because pac-man is circle shaped.
+     Pac-man size horizontally.
      */
-    public static int PLAYER_SIZE;
+    public static int PLAYER_SIZE_X;
+    /**
+     Pac-man size vertically.
+     */
+    public static int PLAYER_SIZE_Y;
     /**
      * player movement speed is expressed in px/s
      * In game as a speed reference we will use GRID size
@@ -86,6 +90,7 @@ public class Config {
             e.printStackTrace();
         }
 
+        // Read config values from file
         TITLE = properties.getProperty("TITLE");
         WINDOW_SIZE_X = Integer.parseInt(properties.getProperty("WINDOW_SIZE_X"));
         WINDOW_SIZE_Y = Integer.parseInt(properties.getProperty("WINDOW_SIZE_Y"));
@@ -94,10 +99,11 @@ public class Config {
         GRID_X = Integer.parseInt(properties.getProperty("GRID_X"));
         GRID_Y = Integer.parseInt(properties.getProperty("GRID_Y"));
         FPS = Float.parseFloat(properties.getProperty("FPS"));
-        PLAYER_SIZE = Integer.parseInt(properties.getProperty("PLAYER_SIZE"));
 
+        // Compute config values from the one read from file
         PLAYER_MOVEMENT_SPEED_X = 6*GRID_X;
         PLAYER_MOVEMENT_SPEED_Y = 6*GRID_Y;
-
+        PLAYER_SIZE_X = GRID_X;
+        PLAYER_SIZE_Y = GRID_Y;
     }
 }
