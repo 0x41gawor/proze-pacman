@@ -77,24 +77,23 @@ public class Map {
         for(int x = 0; x<Config.MAP_SIZE_X; x++) {
             for (int y = 0; y<Config.MAP_SIZE_Y; y++) {
                 if(mapArray[x][y] == 1) {
-                    g.fillRect(x*Config.GRID_X, y*Config.GRID_Y,Config.GRID_X, Config.GRID_Y);
+                    g.fillRect(x*Config.GRID_X, y*Config.GRID_Y,Config.GRID_X-1, Config.GRID_Y-1);
                 }
             }
         }
     }
     /**
-     * Print mapArray as a matrix on the screen
+     * Method name could also be get mapArray
+     * Returns the tile with given pos in GRIDs
      */
-    public void showMapOnConsole(){
-        System.out.println();
-        System.out.println("Map loaded from file:");
-        int x = 0;
-        int y = 0;
-        for (y=0; y<Config.MAP_SIZE_Y;y++){
-            for(x=0; x<Config.MAP_SIZE_X;x++)
-                System.out.print(mapArray[x][y] + " ");
-            System.out.println("");
-        }
+    public int getTile(int x, int y) {
+        return mapArray[x][y];
+    }
+    /**
+     * Return GRID pos from given px pos.
+     */
+    public int[] getTileCords(double posX, double posY) {
+        return new int[]{(int)posX/Config.GRID_X,(int)posY/Config.GRID_Y};
     }
 
 }

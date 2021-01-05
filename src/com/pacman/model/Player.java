@@ -1,5 +1,7 @@
 package com.pacman.model;
 
+import com.pacman.map.Map;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
@@ -55,13 +57,15 @@ public class Player extends Rectangle {
      */
     public void draw(Graphics g) {
         g.setColor(Color.orange);
-        g.fillRect((int)posX,(int)posY,width,height);
+        g.fillRect((int)posX-width/2,(int)posY-height/2,width,height);
     }
     /**
      * Update player positions
      * Should be called in GamePanel.paint()
      */
     public void _update(double dt) {
+
+
         posX = posX + movementX * movementSpeedX * dt;
         posY = posY + movementY * movementSpeedY * dt;
     }

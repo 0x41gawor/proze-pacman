@@ -11,6 +11,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
 /**
  * GamePanel class from Swing
@@ -103,6 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
      */
     private void _update(double dt) {
         player._update(dt);
+        System.out.println(Arrays.toString(map.getTileCords(player.get_posX(), player.get_posY())));
     }
     /**
      Paint the frame.
