@@ -2,6 +2,7 @@ package com.pacman.ui;
 
 import com.pacman.config.Config;
 import com.pacman.map.Map;
+import com.pacman.model.Ghost;
 import com.pacman.model.Player;
 import com.pacman.ui.util.Clock;
 
@@ -56,6 +57,9 @@ public class GamePanel extends JPanel implements Runnable {
      */
     Clock clock;
 
+    Ghost g1 = new Ghost(Config.GRID_X*5 + Config.GRID_X/2,Config.GRID_Y*6 + Config.GRID_Y/2,Config.GHOST_SIZE_X,Config.GHOST_SIZE_Y,Config.GHOST_MOVEMENT_SPEED_X, Config.GHOST_MOVEMENT_SPEED_Y);
+    Ghost g2 = new Ghost(Config.GRID_X*5 + Config.GRID_X/2,Config.GRID_Y*8 + Config.GRID_Y/2,Config.GHOST_SIZE_X,Config.GHOST_SIZE_Y,6*30, 6*30);
+
     //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
      * Determine if the gameplay is paused
@@ -103,7 +107,8 @@ public class GamePanel extends JPanel implements Runnable {
      */
     private void _update(double dt) {
         player._update(dt,map);
-        //System.out.println(Arrays.toString(map.getTileCords(player.get_posX(), player.get_posY())));
+        g1._update(dt,map);
+        g2._update(dt,map);
     }
     /**
      Paint the frame.
@@ -123,6 +128,8 @@ public class GamePanel extends JPanel implements Runnable {
         // Every object should have it's draw() method called here
         map.draw(g);
         player.draw(g);
+        g1.draw(g);
+        g2.draw(g);
 
         // IDK if that's necessary
         g.dispose();
@@ -184,6 +191,7 @@ public class GamePanel extends JPanel implements Runnable {
             screenSize = e.getComponent().getSize();
             newConfigValues();
             resizePlayer(oldScreenSize);
+            resizeGhost(oldScreenSize);
         }
         /**
          * Resizing window means to resize GRID, and all things that depend on this
@@ -198,6 +206,10 @@ public class GamePanel extends JPanel implements Runnable {
             Config.PLAYER_MOVEMENT_SPEED_Y = 6 * Config.GRID_Y;
             Config.PLAYER_SIZE_X = (int)(0.8*Config.GRID_X);
             Config.PLAYER_SIZE_Y = (int)(0.8*Config.GRID_Y);
+            Config.GHOST_MOVEMENT_SPEED_X = 6 * Config.GRID_X;
+            Config.GHOST_MOVEMENT_SPEED_Y = 6 * Config.GRID_Y;
+            Config.GHOST_SIZE_X = Config.GRID_X;
+            Config.GHOST_SIZE_Y = Config.GRID_Y;
         }
         /**
          * Resizing window means to resize PLAYER_SIZE and change his position
@@ -212,6 +224,19 @@ public class GamePanel extends JPanel implements Runnable {
             player.set_posY(player.get_posY() / (double)oldScreenSize.height * (double)screenSize.height);
             player.set_movementSpeedX( Config.PLAYER_MOVEMENT_SPEED_X );
             player.set_movementSpeedY( Config.PLAYER_MOVEMENT_SPEED_Y );
+        }
+
+        private void resizeGhost(Dimension oldScreenSize) {
+            g1.setSize((int)((double)Config.GHOST_SIZE_X/(double)Config.WINDOW_SIZE_X * screenSize.width), (int)((double)Config.GHOST_SIZE_Y/(double)Config.WINDOW_SIZE_Y * screenSize.height));
+            g1.set_posX(g1.get_posX() / (double)oldScreenSize.width * (double)screenSize.width);
+            g1.set_posY(g1.get_posY() / (double)oldScreenSize.height * (double)screenSize.height);
+            g1.set_movementSpeedX( Config.GHOST_MOVEMENT_SPEED_X );
+            g1.set_movementSpeedY( Config.GHOST_MOVEMENT_SPEED_Y );
+            g2.setSize((int)((double)Config.GHOST_SIZE_X/(double)Config.WINDOW_SIZE_X * screenSize.width), (int)((double)Config.GHOST_SIZE_Y/(double)Config.WINDOW_SIZE_Y * screenSize.height));
+            g2.set_posX(g2.get_posX() / (double)oldScreenSize.width * (double)screenSize.width);
+            g2.set_posY(g2.get_posY() / (double)oldScreenSize.height * (double)screenSize.height);
+            g2.set_movementSpeedX( Config.GHOST_MOVEMENT_SPEED_X );
+            g2.set_movementSpeedY( Config.GHOST_MOVEMENT_SPEED_Y );
         }
     }
 }

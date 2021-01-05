@@ -13,7 +13,6 @@ import java.awt.event.KeyEvent;
  * And btw. name pac-man appears too much in this project.
  */
 public class Player extends Rectangle {
-
     /**
      Vertical Movement speed in pixels per second [px/s]
      Horizontal and Vertical speed may differ because of window resizing,
@@ -45,7 +44,7 @@ public class Player extends Rectangle {
 
     //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
-     Default Constructor
+     Constructor
      */
     public Player(int posX, int posY, int width, int height, int movementSpeedX, int movementSpeedY) {
         super(posX,posY,width,height);
