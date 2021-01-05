@@ -103,8 +103,8 @@ public class GamePanel extends JPanel implements Runnable {
      Every object should have it's _update() method to be called here.
      */
     private void _update(double dt) {
-        player._update(dt);
-        System.out.println(Arrays.toString(map.getTileCords(player.get_posX(), player.get_posY())));
+        player._update(dt,map);
+        //System.out.println(Arrays.toString(map.getTileCords(player.get_posX(), player.get_posY())));
     }
     /**
      Paint the frame.
