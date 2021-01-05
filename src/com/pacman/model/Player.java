@@ -74,7 +74,7 @@ public class Player extends Rectangle {
      */
     public void _update(double dt, Map map) {
         ///TODO Improve collision!!!
-        int[] tileCords = map.getTileCords(get_posX()+movementX * movementSpeedX * dt, get_posY()+movementY * movementSpeedY * dt);
+        int[] tileCords = map.getTileCords(get_posX(), get_posY());
         int tileCordX = tileCords[0];
         int tileCordY = tileCords[1];
         System.out.print(tileCordX+ " : ");
@@ -85,6 +85,8 @@ public class Player extends Rectangle {
         boolean downBanned = false;
         // S I M P L E   C O L L I S I O N
         // In future move to method checkCollision
+        x = (int)(posX + movementX * movementSpeedX * dt)-width/2;
+        y = (int)(posY + movementY * movementSpeedY * dt)-height/2;
         // tileCordx-1, tileCordY ==== lewo
         if (map.getTile(tileCordX-1, tileCordY) == 1) {
             if(this.intersects(new Rectangle((tileCordX-1)* Config.GRID_X,tileCordY*Config.GRID_Y, Config.GRID_X, Config.GRID_Y))){
