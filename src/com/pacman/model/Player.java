@@ -5,7 +5,6 @@ import com.pacman.map.Map;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
 
 /**
  * Class representing pac-man
@@ -43,6 +42,8 @@ public class Player extends Rectangle {
      Position Y
      */
     double posY;
+
+    //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
      Default Constructor
      */
@@ -53,6 +54,8 @@ public class Player extends Rectangle {
         this.movementSpeedX = movementSpeedX;
         this.movementSpeedY = movementSpeedY;
     }
+
+    //------------------------------------------------------------------------------------------------------------------ D R A W
     /**
      * Draws player with given Graphics
      * Should be called in GamePanel.paint()
@@ -63,11 +66,14 @@ public class Player extends Rectangle {
         y = (int)posY-height/2;
         g.fillOval(x,y,(int)(width*0.8),(int)(height*0.8));
     }
+
+    //------------------------------------------------------------------------------------------------------------------ U P D A T E
     /**
      * Update player positions
      * Should be called in GamePanel._update()
      */
     public void _update(double dt, Map map) {
+        ///TODO Improve collision!!!
         int[] tileCords = map.getTileCords(get_posX()+movementX * movementSpeedX * dt, get_posY()+movementY * movementSpeedY * dt);
         int tileCordX = tileCords[0];
         int tileCordY = tileCords[1];
@@ -77,11 +83,8 @@ public class Player extends Rectangle {
         boolean rightBanned = false;
         boolean upBanned = false;
         boolean downBanned = false;
-
         // S I M P L E   C O L L I S I O N
         // In future move to method checkCollision
-
-
         // tileCordx-1, tileCordY ==== lewo
         if (map.getTile(tileCordX-1, tileCordY) == 1) {
             if(this.intersects(new Rectangle((tileCordX-1)* Config.GRID_X,tileCordY*Config.GRID_Y, Config.GRID_X, Config.GRID_Y))){
@@ -89,9 +92,6 @@ public class Player extends Rectangle {
                 leftBanned = true;
             }
         }
-
-        // tileCordx-1, tileCordY-1 ====lewo góra
-        // tileCordx-1, tileCordY+1 ====lewo dół
         // tileCordx+1, tileCordY ==== prawo
         if (map.getTile(tileCordX+1, tileCordY) == 1) {
             if(this.intersects(new Rectangle((tileCordX+1)* Config.GRID_X,tileCordY*Config.GRID_Y, Config.GRID_X, Config.GRID_Y))){
@@ -99,8 +99,6 @@ public class Player extends Rectangle {
                 rightBanned = true;
             }
         }
-        // tileCordx+1, tileCordY-1 ==== prawo góra
-        // tileCordx+1, tileCordY+1 ==== prawo dół
         // tileCordx, tileCordY-1 ==== góra
         if (map.getTile(tileCordX, tileCordY-1) == 1) {
             if(this.intersects(new Rectangle(tileCordX* Config.GRID_X,(tileCordY-1)*Config.GRID_Y, Config.GRID_X, Config.GRID_Y))){
@@ -122,6 +120,8 @@ public class Player extends Rectangle {
             posY = posY + movementY * movementSpeedY * dt;
         }
     }
+
+    //------------------------------------------------------------------------------------------------------------------ K E Y   H A N D L E R
     /**
      * Set player direction depending on the keys pressed by the user
      * Should be called in GamePanel.InputHandler.keyPressed()

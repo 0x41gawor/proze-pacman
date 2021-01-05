@@ -84,7 +84,7 @@ public class Map {
     }
     /**
      * Method name could also be get mapArray
-     * Returns the tile with given pos in GRIDs
+     * Returns the tile (0 OR 1) with given pos in GRIDs
      */
     public int getTile(int x, int y) {
         return mapArray[x][y];
