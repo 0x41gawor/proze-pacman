@@ -1,6 +1,7 @@
 package com.pacman.ui;
 
 import com.pacman.config.Config;
+import com.pacman.map.Map;
 import com.pacman.model.Player;
 import com.pacman.ui.util.Clock;
 
@@ -47,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
     /**
      Object representing pac-man
      */
+    Map map;
     Player player;
     /**
      Measure time between frames.
@@ -67,6 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
         // Setting up the Game
         screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
         player = new Player(100,100,Config.PLAYER_SIZE_X,Config.PLAYER_SIZE_Y,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
+        map = new Map();
         // Setting up JPanel
         clock = new Clock();
         this.setFocusable(true); //they say it is focusable by default
@@ -117,6 +120,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
         // Objects
         // Every object should have it's draw() method called here
+        map.draw(g);
         player.draw(g);
 
         // IDK if that's necessary
@@ -191,8 +195,8 @@ public class GamePanel extends JPanel implements Runnable {
             Config.GRID_Y = Config.WINDOW_SIZE_Y / Config.MAP_SIZE_Y;
             Config.PLAYER_MOVEMENT_SPEED_X = 6 * Config.GRID_X;
             Config.PLAYER_MOVEMENT_SPEED_Y = 6 * Config.GRID_Y;
-            Config.PLAYER_SIZE_X = Config.GRID_X;
-            Config.PLAYER_SIZE_Y = Config.GRID_Y;
+            Config.PLAYER_SIZE_X = (int)(0.8*Config.GRID_X);
+            Config.PLAYER_SIZE_Y = (int)(0.8*Config.GRID_Y);
         }
         /**
          * Resizing window means to resize PLAYER_SIZE and change his position
@@ -202,7 +206,7 @@ public class GamePanel extends JPanel implements Runnable {
          * need the same amount of time to cover the distance of the entire map
          */
         private void resizePlayer(Dimension oldScreenSize) {
-            player.setSize(screenSize.width/(Config.WINDOW_SIZE_X/Config.GRID_X),screenSize.height/(Config.WINDOW_SIZE_Y/Config.GRID_Y));
+            player.setSize((int)((double)Config.PLAYER_SIZE_X/(double)Config.WINDOW_SIZE_X * screenSize.width), (int)((double)Config.PLAYER_SIZE_Y/(double)Config.WINDOW_SIZE_Y * screenSize.height));
             player.set_posX(player.get_posX() / (double)oldScreenSize.width * (double)screenSize.width);
             player.set_posY(player.get_posY() / (double)oldScreenSize.height * (double)screenSize.height);
             player.set_movementSpeedX( Config.PLAYER_MOVEMENT_SPEED_X );

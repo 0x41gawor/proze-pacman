@@ -2,6 +2,7 @@ package com.pacman.map;
 
 import com.pacman.config.Config;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,14 +20,13 @@ public class Map {
     /**
      2D array with 0 and 1 values used to store single tile type.
      */
-    private final int[][] mapArray = new int[Config.MAP_SIZE_X][Config.MAP_SIZE_Y];
-
+    private final int[][] mapArray = new int[Config.MAP_SIZE_X][Config.MAP_SIZE_Y];;
     /**
      Default constructor
      */
     public Map(){
+        loadFromFile("level1.txt");
     }
-
     /**
      * Loads map from file
      *
@@ -36,20 +36,16 @@ public class Map {
      * @param fileName - name of file, that stores the level
      */
     public void loadFromFile(String fileName) {
-
         try{
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line = reader.readLine();
             List<String> positions = new ArrayList<String>(Arrays.asList(line.split(" ")));
-
-
             // <   temporarily here >
             System.out.print("Positions: ");
             for (String pos : positions){
                 System.out.print(pos + " ");
             }
             // < / temporarily here >
-
             int x=0;
             int y=0;
             while (true) {
@@ -69,7 +65,23 @@ public class Map {
                 e.printStackTrace();
         }
     }
-
+    /**
+     * Draws map.
+     * Drawing map means to draw all of the map tiles being a wall.
+     * Should be called in GamePanel.paint()
+     *
+     * @param g - Graphic context to draw on
+     */
+    public void draw(Graphics g) {
+        g.setColor(Color.blue);
+        for(int x = 0; x<Config.MAP_SIZE_X; x++) {
+            for (int y = 0; y<Config.MAP_SIZE_Y; y++) {
+                if(mapArray[x][y] == 1) {
+                    g.fillRect(x*Config.GRID_X, y*Config.GRID_Y,Config.GRID_X, Config.GRID_Y);
+                }
+            }
+        }
+    }
     /**
      * Print mapArray as a matrix on the screen
      */
@@ -84,4 +96,5 @@ public class Map {
             System.out.println("");
         }
     }
+
 }

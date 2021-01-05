@@ -23,6 +23,7 @@ public class GameFrame extends JFrame {
         this.setTitle(Config.TITLE);
         this.setBackground(Color.black);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setMinimumSize(new Dimension(100,100));
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
