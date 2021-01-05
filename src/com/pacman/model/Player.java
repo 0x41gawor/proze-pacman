@@ -54,7 +54,7 @@ public class Player extends Rectangle {
      * Should be called in GamePanel.paint()
      */
     public void draw(Graphics g) {
-        g.setColor(Color.green);
+        g.setColor(Color.orange);
         g.fillRect((int)posX,(int)posY,width,height);
     }
     /**
