@@ -1,7 +1,6 @@
 package com.pacman.app;
 
 import com.pacman.config.Config;
-import com.pacman.map.Map;
 import com.pacman.ui.GameFrame;
 
 /**

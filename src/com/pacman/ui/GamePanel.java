@@ -68,7 +68,7 @@ public class GamePanel extends JPanel implements Runnable {
     GamePanel() {
         // Setting up the Game
         screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
-        player = new Player(100,100,Config.PLAYER_SIZE_X,Config.PLAYER_SIZE_Y,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
+        player = new Player(Config.GRID_X + Config.GRID_X/2,Config.GRID_Y + Config.GRID_Y/2,Config.PLAYER_SIZE_X,Config.PLAYER_SIZE_Y,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
         map = new Map();
         // Setting up JPanel
         clock = new Clock();
@@ -102,7 +102,8 @@ public class GamePanel extends JPanel implements Runnable {
      Every object should have it's _update() method to be called here.
      */
     private void _update(double dt) {
-        player._update(dt);
+        player._update(dt,map);
+        //System.out.println(Arrays.toString(map.getTileCords(player.get_posX(), player.get_posY())));
     }
     /**
      Paint the frame.

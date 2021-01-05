@@ -1,5 +1,8 @@
 package com.pacman.model;
 
+import com.pacman.config.Config;
+import com.pacman.map.Map;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
@@ -39,6 +42,8 @@ public class Player extends Rectangle {
      Position Y
      */
     double posY;
+
+    //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
      Default Constructor
      */
@@ -49,22 +54,76 @@ public class Player extends Rectangle {
         this.movementSpeedX = movementSpeedX;
         this.movementSpeedY = movementSpeedY;
     }
+
+    //------------------------------------------------------------------------------------------------------------------ D R A W
     /**
      * Draws player with given Graphics
      * Should be called in GamePanel.paint()
      */
     public void draw(Graphics g) {
         g.setColor(Color.orange);
-        g.fillRect((int)posX,(int)posY,width,height);
+        x = (int)posX-width/2;
+        y = (int)posY-height/2;
+        g.fillOval(x,y,(int)(width*0.8),(int)(height*0.8));
     }
+
+    //------------------------------------------------------------------------------------------------------------------ U P D A T E
     /**
      * Update player positions
-     * Should be called in GamePanel.paint()
+     * Should be called in GamePanel._update()
      */
-    public void _update(double dt) {
-        posX = posX + movementX * movementSpeedX * dt;
-        posY = posY + movementY * movementSpeedY * dt;
+    public void _update(double dt, Map map) {
+        ///TODO Improve collision!!!
+        int[] tileCords = map.getTileCords(get_posX(), get_posY());
+        int tileCordX = tileCords[0];
+        int tileCordY = tileCords[1];
+        System.out.print(tileCordX+ " : ");
+        System.out.println(tileCordY);
+        boolean leftBanned = false;
+        boolean rightBanned = false;
+        boolean upBanned = false;
+        boolean downBanned = false;
+        // S I M P L E   C O L L I S I O N
+        // In future move to method checkCollision
+        x = (int)(posX + movementX * movementSpeedX * dt)-width/2;
+        y = (int)(posY + movementY * movementSpeedY * dt)-height/2;
+        // tileCordx-1, tileCordY ==== lewo
+        if (map.getTile(tileCordX-1, tileCordY) == 1) {
+            if(this.intersects(new Rectangle((tileCordX-1)* Config.GRID_X,tileCordY*Config.GRID_Y, Config.GRID_X, Config.GRID_Y))){
+                System.out.println("Kolizja lewo");
+                leftBanned = true;
+            }
+        }
+        // tileCordx+1, tileCordY ==== prawo
+        if (map.getTile(tileCordX+1, tileCordY) == 1) {
+            if(this.intersects(new Rectangle((tileCordX+1)* Config.GRID_X,tileCordY*Config.GRID_Y, Config.GRID_X, Config.GRID_Y))){
+                System.out.println("Kolizja prawo");
+                rightBanned = true;
+            }
+        }
+        // tileCordx, tileCordY-1 ==== góra
+        if (map.getTile(tileCordX, tileCordY-1) == 1) {
+            if(this.intersects(new Rectangle(tileCordX* Config.GRID_X,(tileCordY-1)*Config.GRID_Y, Config.GRID_X, Config.GRID_Y))){
+                System.out.println("Kolizja góra");
+                upBanned = true;
+            }
+        }
+        // tileCordx, tileCordY+1 ==== dół
+        if (map.getTile(tileCordX, tileCordY+1) == 1) {
+            if(this.intersects(new Rectangle(tileCordX* Config.GRID_X,(tileCordY+1)*Config.GRID_Y, Config.GRID_X, Config.GRID_Y))){
+                System.out.println("Kolizja dół");
+                downBanned = true;
+            }
+        }
+        if(movementX != -1 && !rightBanned || movementX !=1 && !leftBanned) {
+            posX = posX + movementX * movementSpeedX * dt;
+        }
+        if(movementY != -1 && !downBanned || movementY !=1 && !upBanned) {
+            posY = posY + movementY * movementSpeedY * dt;
+        }
     }
+
+    //------------------------------------------------------------------------------------------------------------------ K E Y   H A N D L E R
     /**
      * Set player direction depending on the keys pressed by the user
      * Should be called in GamePanel.InputHandler.keyPressed()
@@ -88,12 +147,19 @@ public class Player extends Rectangle {
      * Should be called in GamePanel.InputHandler.keyReleased()
      */
     public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
+        if(e.getKeyCode() == KeyEvent.VK_UP && movementY == -1) {
             movementY = 0;
         }
-        if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT) {
+        if(e.getKeyCode() == KeyEvent.VK_DOWN && movementY == 1) {
+            movementY = 0;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_LEFT && movementX == -1) {
             movementX = 0;
         }
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT && movementX == 1) {
+            movementX = 0;
+        }
+
     }
 
     //------------------------------------------------------------------------------------------------------------------ G E T T E R S
