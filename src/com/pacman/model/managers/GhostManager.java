@@ -28,7 +28,7 @@ public class GhostManager {
     /**
      * Array with available colors for ghosts
      */
-    Color[] colors;
+    String[] colors;
     /**
      * Constructor.
      *
@@ -40,7 +40,7 @@ public class GhostManager {
         // Initialize members
         ghostList = new ArrayList<Ghost>();
         random = new Random();
-        colors = new Color[]{Color.WHITE, Color.PINK, Color.CYAN, Color.GREEN, Color.RED, Color.MAGENTA, Color.YELLOW, Color.gray};
+        colors = new String[]{"#fc7703", "#f003fc","#03fcf4","#65fc00","#fca503","#fba6ff","#03fc98","#187010"};
         // Add ghosts to the list
         for(int i=0; i<ghostNumber; i++) {
             ghostList.add(ghostFactory(map));
@@ -62,7 +62,7 @@ public class GhostManager {
         }while (map.getTile(posX,posY) != 0);
         // Random ghost color
         int sel = random.nextInt(colors.length);
-        Color color = colors[sel];
+        Color color = Color.decode(colors[sel]);
         // Choose direction for Ghost
         Ghost.Direction dir;
         int[] dirs = {0, 0, 0, 0};
