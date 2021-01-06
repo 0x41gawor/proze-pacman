@@ -57,8 +57,8 @@ public class GamePanel extends JPanel implements Runnable {
      */
     Clock clock;
 
-    Ghost g1 = new Ghost(Config.GRID_X*5 + Config.GRID_X/2,Config.GRID_Y*6 + Config.GRID_Y/2,Config.GHOST_SIZE_X,Config.GHOST_SIZE_Y,Config.GHOST_MOVEMENT_SPEED_X, Config.GHOST_MOVEMENT_SPEED_Y);
-    Ghost g2 = new Ghost(Config.GRID_X*5 + Config.GRID_X/2,Config.GRID_Y*8 + Config.GRID_Y/2,Config.GHOST_SIZE_X,Config.GHOST_SIZE_Y,6*30, 6*30);
+    Ghost g1 = new Ghost(Config.GRID_X*5 + Config.GRID_X/2,Config.GRID_Y*6 + Config.GRID_Y/2,Config.GHOST_SIZE_X,Config.GHOST_SIZE_Y,Config.GHOST_MOVEMENT_SPEED_X, Config.GHOST_MOVEMENT_SPEED_Y, Ghost.Direction.LEFT);
+    Ghost g2 = new Ghost(Config.GRID_X*5 + Config.GRID_X/2,Config.GRID_Y*8 + Config.GRID_Y/2,Config.GHOST_SIZE_X,Config.GHOST_SIZE_Y,Config.GHOST_MOVEMENT_SPEED_X, Config.GHOST_MOVEMENT_SPEED_Y,  Ghost.Direction.RIGHT);
 
     //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
@@ -206,10 +206,10 @@ public class GamePanel extends JPanel implements Runnable {
             Config.PLAYER_MOVEMENT_SPEED_Y = 6 * Config.GRID_Y;
             Config.PLAYER_SIZE_X = (int)(0.8*Config.GRID_X);
             Config.PLAYER_SIZE_Y = (int)(0.8*Config.GRID_Y);
-            Config.GHOST_MOVEMENT_SPEED_X = 6 * Config.GRID_X;
-            Config.GHOST_MOVEMENT_SPEED_Y = 6 * Config.GRID_Y;
-            Config.GHOST_SIZE_X = Config.GRID_X;
-            Config.GHOST_SIZE_Y = Config.GRID_Y;
+            Config.GHOST_MOVEMENT_SPEED_X = 4 * Config.GRID_X;
+            Config.GHOST_MOVEMENT_SPEED_Y = 4 * Config.GRID_Y;
+            Config.GHOST_SIZE_X = (int)(0.8*Config.GRID_X);
+            Config.GHOST_SIZE_Y = (int)(0.8*Config.GRID_Y);
         }
         /**
          * Resizing window means to resize PLAYER_SIZE and change his position

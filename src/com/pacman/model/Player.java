@@ -76,8 +76,6 @@ public class Player extends Rectangle {
         int[] tileCords = map.getTileCords(get_posX(), get_posY());
         int tileCordX = tileCords[0];
         int tileCordY = tileCords[1];
-        System.out.print(tileCordX+ " : ");
-        System.out.println(tileCordY);
         boolean leftBanned = false;
         boolean rightBanned = false;
         boolean upBanned = false;

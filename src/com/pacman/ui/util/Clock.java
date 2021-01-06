@@ -18,13 +18,13 @@ public class Clock {
     double dt;
     /**
      * Default constructor
-     *
+     */
     public Clock() {
         last = System.nanoTime();
         now = last;
         dt = 0.f;
     }
-    /**
+     /**
      * Returns the time between this call and the last one
      */
     public double restart() {
