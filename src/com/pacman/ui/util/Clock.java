@@ -1,7 +1,8 @@
 package com.pacman.ui.util;
 
 /**
- *  Auxillary class to measure time between two events
+ *  Auxillary class to measure time between two events.
+ *  Used in MAIN GAME LOOP to measure time of single frame.
  */
 public class Clock {
     /**

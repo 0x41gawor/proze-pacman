@@ -53,7 +53,6 @@ public class Player extends Rectangle {
         this.movementSpeedX = movementSpeedX;
         this.movementSpeedY = movementSpeedY;
     }
-
     //------------------------------------------------------------------------------------------------------------------ D R A W
     /**
      * Draws player with given Graphics
@@ -65,7 +64,6 @@ public class Player extends Rectangle {
         y = (int)posY-height/2;
         g.fillOval(x,y,(int)(width*0.8),(int)(height*0.8));
     }
-
     //------------------------------------------------------------------------------------------------------------------ U P D A T E
     /**
      * Update player positions
@@ -87,28 +85,24 @@ public class Player extends Rectangle {
         // tileCordx-1, tileCordY ==== lewo
         if (map.getTile(tileCordX-1, tileCordY) == 1) {
             if(this.intersects(new Rectangle((tileCordX-1)* Config.GRID_X,tileCordY*Config.GRID_Y, Config.GRID_X, Config.GRID_Y))){
-                System.out.println("Kolizja lewo");
                 leftBanned = true;
             }
         }
         // tileCordx+1, tileCordY ==== prawo
         if (map.getTile(tileCordX+1, tileCordY) == 1) {
             if(this.intersects(new Rectangle((tileCordX+1)* Config.GRID_X,tileCordY*Config.GRID_Y, Config.GRID_X, Config.GRID_Y))){
-                System.out.println("Kolizja prawo");
                 rightBanned = true;
             }
         }
         // tileCordx, tileCordY-1 ==== góra
         if (map.getTile(tileCordX, tileCordY-1) == 1) {
             if(this.intersects(new Rectangle(tileCordX* Config.GRID_X,(tileCordY-1)*Config.GRID_Y, Config.GRID_X, Config.GRID_Y))){
-                System.out.println("Kolizja góra");
                 upBanned = true;
             }
         }
         // tileCordx, tileCordY+1 ==== dół
         if (map.getTile(tileCordX, tileCordY+1) == 1) {
             if(this.intersects(new Rectangle(tileCordX* Config.GRID_X,(tileCordY+1)*Config.GRID_Y, Config.GRID_X, Config.GRID_Y))){
-                System.out.println("Kolizja dół");
                 downBanned = true;
             }
         }
@@ -119,7 +113,6 @@ public class Player extends Rectangle {
             posY = posY + movementY * movementSpeedY * dt;
         }
     }
-
     //------------------------------------------------------------------------------------------------------------------ K E Y   H A N D L E R
     /**
      * Set player direction depending on the keys pressed by the user
@@ -158,7 +151,6 @@ public class Player extends Rectangle {
         }
 
     }
-
     //------------------------------------------------------------------------------------------------------------------ G E T T E R S
     /**
      * posX getter used in resizeHandler

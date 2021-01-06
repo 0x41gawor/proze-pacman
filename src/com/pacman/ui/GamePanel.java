@@ -56,13 +56,18 @@ public class GamePanel extends JPanel implements Runnable {
      Used to keep constant speed of objects independently from FPS.
      */
     Clock clock;
-
+    /**
+     Temporarily added ghost to test Ghost class
+     */
     Ghost g1 = new Ghost(Config.GRID_X*5 + Config.GRID_X/2,Config.GRID_Y*6 + Config.GRID_Y/2,Config.GHOST_SIZE_X,Config.GHOST_SIZE_Y,Config.GHOST_MOVEMENT_SPEED_X, Config.GHOST_MOVEMENT_SPEED_Y, Ghost.Direction.LEFT);
+    /**
+     Temporarily added ghost to test Ghost class
+     */
     Ghost g2 = new Ghost(Config.GRID_X*5 + Config.GRID_X/2,Config.GRID_Y*8 + Config.GRID_Y/2,Config.GHOST_SIZE_X,Config.GHOST_SIZE_Y,Config.GHOST_MOVEMENT_SPEED_X, Config.GHOST_MOVEMENT_SPEED_Y,  Ghost.Direction.RIGHT);
 
     //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
-     * Determine if the gameplay is paused
+     * Determines if the gameplay is paused
      */
      boolean isPause = false;
     /**
@@ -225,7 +230,9 @@ public class GamePanel extends JPanel implements Runnable {
             player.set_movementSpeedX( Config.PLAYER_MOVEMENT_SPEED_X );
             player.set_movementSpeedY( Config.PLAYER_MOVEMENT_SPEED_Y );
         }
-
+        /**
+         * Resizing window means to resize GHOST_SIZE and change his position
+         */
         private void resizeGhost(Dimension oldScreenSize) {
             g1.setSize((int)((double)Config.GHOST_SIZE_X/(double)Config.WINDOW_SIZE_X * screenSize.width), (int)((double)Config.GHOST_SIZE_Y/(double)Config.WINDOW_SIZE_Y * screenSize.height));
             g1.set_posX(g1.get_posX() / (double)oldScreenSize.width * (double)screenSize.width);
