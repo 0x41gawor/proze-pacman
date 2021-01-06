@@ -34,15 +34,22 @@ public class CollectableManager {
      */
     public CollectableManager(Map map) {
         collectableList = new ArrayList<Collectable>();
-        //Create Cup
+        random = new Random();
+        // Create Cup
         //TODO hardcoded values !!!
         collectableList.add(collectableFactory(Collectable.Type.CUP, 9, 9));
-        //Create Dots
+        // Create Dots
         //TODO hardcoded values !!!
         collectableList.add(collectableFactory(Collectable.Type.DOT, 5, 1));
         collectableList.add(collectableFactory(Collectable.Type.DOT, 19, 17));
         collectableList.add(collectableFactory(Collectable.Type.DOT, 1, 17));
         collectableList.add(collectableFactory(Collectable.Type.DOT, 19, 1));
+        // Create Gun
+        collectableList.add(collectableFactory(Collectable.Type.GUN, map));
+        // Create Cherries
+        collectableList.add(collectableFactory(Collectable.Type.CHERRIES, map));
+        // Create Berries
+        collectableList.add(collectableFactory(Collectable.Type.BERRIES, map));
     }
     /**
      * Creates collectable item with random position.
