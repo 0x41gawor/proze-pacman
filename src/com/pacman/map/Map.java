@@ -1,6 +1,7 @@
 package com.pacman.map;
 
 import com.pacman.config.Config;
+import com.pacman.util.Vector;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -20,7 +21,7 @@ public class Map {
     /**
      2D array with 0 and 1 values used to store single tile type.
      */
-    private final int[][] mapArray = new int[Config.MAP_SIZE_X][Config.MAP_SIZE_Y];;
+    private final int[][] mapArray = new int[Config.MAP_SIZE_X][Config.MAP_SIZE_Y];
     /**
      Default constructor
      */
