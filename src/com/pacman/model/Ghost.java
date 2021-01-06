@@ -47,12 +47,16 @@ public class Ghost extends Rectangle {
      Random generator for generating direction
      */
     Random random;
+    /**
+     Color of displayed ghost
+     */
+    Color color;
 
     //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
      Constructor
      */
-    public Ghost(int posX, int posY, int width, int height, int movementSpeedX, int movementSpeedY, Direction dir) {
+    public Ghost(int posX, int posY, int width, int height, int movementSpeedX, int movementSpeedY, Direction dir, Color color) {
         super(posX,posY,width,height);
         this.posX = posX;
         this.posY = posY;
@@ -61,6 +65,7 @@ public class Ghost extends Rectangle {
         this.movementSpeedX = movementSpeedX;
         this.movementSpeedY = movementSpeedY;
         this.dir = dir;
+        this.color = color;
         random = new Random();
     }
     //------------------------------------------------------------------------------------------------------------------ D R A W
@@ -69,7 +74,7 @@ public class Ghost extends Rectangle {
      * Should be called in GamePanel.paint() in GhostManager.draw()
      */
     public void draw(Graphics g) {
-        g.setColor(Color.white);
+        g.setColor(color);
         x = (int)posX-width/2;
         y = (int)posY-height/2;
         g.fillRect(x,y,width,height);
