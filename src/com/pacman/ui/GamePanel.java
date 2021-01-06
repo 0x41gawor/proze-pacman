@@ -4,6 +4,7 @@ import com.pacman.config.Config;
 import com.pacman.map.Map;
 import com.pacman.model.Ghost;
 import com.pacman.model.Player;
+import com.pacman.model.managers.GhostManager;
 import com.pacman.ui.util.Clock;
 
 import javax.swing.*;
@@ -57,19 +58,15 @@ public class GamePanel extends JPanel implements Runnable {
      */
     Clock clock;
     /**
-     Temporarily added ghost to test Ghost class
-     */
-    Ghost g1 = new Ghost(Config.GRID_X*5 + Config.GRID_X/2,Config.GRID_Y*6 + Config.GRID_Y/2,Config.GHOST_SIZE_X,Config.GHOST_SIZE_Y,Config.GHOST_MOVEMENT_SPEED_X, Config.GHOST_MOVEMENT_SPEED_Y, Ghost.Direction.LEFT);
-    /**
-     Temporarily added ghost to test Ghost class
-     */
-    Ghost g2 = new Ghost(Config.GRID_X*5 + Config.GRID_X/2,Config.GRID_Y*8 + Config.GRID_Y/2,Config.GHOST_SIZE_X,Config.GHOST_SIZE_Y,Config.GHOST_MOVEMENT_SPEED_X, Config.GHOST_MOVEMENT_SPEED_Y,  Ghost.Direction.RIGHT);
-
-    //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
-    /**
      * Determines if the gameplay is paused
      */
-     boolean isPause = false;
+    boolean isPause = false;
+    /**
+     GhostManager
+     */
+    GhostManager ghostManager;
+
+    //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
      Default Constructor
      Sets JPanel and run the gameplay thread
@@ -79,6 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
         screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
         player = new Player(Config.GRID_X + Config.GRID_X/2,Config.GRID_Y + Config.GRID_Y/2,Config.PLAYER_SIZE_X,Config.PLAYER_SIZE_Y,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
         map = new Map();
+        ghostManager = new GhostManager(map);
         // Setting up JPanel
         clock = new Clock();
         this.setFocusable(true); //they say it is focusable by default
@@ -112,8 +110,7 @@ public class GamePanel extends JPanel implements Runnable {
      */
     private void _update(double dt) {
         player._update(dt,map);
-        g1._update(dt,map);
-        g2._update(dt,map);
+        ghostManager._update(dt,map);
     }
     /**
      Paint the frame.
@@ -133,8 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
         // Every object should have it's draw() method called here
         map.draw(g);
         player.draw(g);
-        g1.draw(g);
-        g2.draw(g);
+        ghostManager.draw(g);
 
         // IDK if that's necessary
         g.dispose();
@@ -196,7 +192,7 @@ public class GamePanel extends JPanel implements Runnable {
             screenSize = e.getComponent().getSize();
             newConfigValues();
             resizePlayer(oldScreenSize);
-            resizeGhost(oldScreenSize);
+            resizeGhosts(oldScreenSize);
         }
         /**
          * Resizing window means to resize GRID, and all things that depend on this
@@ -233,17 +229,8 @@ public class GamePanel extends JPanel implements Runnable {
         /**
          * Resizing window means to resize GHOST_SIZE and change his position
          */
-        private void resizeGhost(Dimension oldScreenSize) {
-            g1.setSize((int)((double)Config.GHOST_SIZE_X/(double)Config.WINDOW_SIZE_X * screenSize.width), (int)((double)Config.GHOST_SIZE_Y/(double)Config.WINDOW_SIZE_Y * screenSize.height));
-            g1.set_posX(g1.get_posX() / (double)oldScreenSize.width * (double)screenSize.width);
-            g1.set_posY(g1.get_posY() / (double)oldScreenSize.height * (double)screenSize.height);
-            g1.set_movementSpeedX( Config.GHOST_MOVEMENT_SPEED_X );
-            g1.set_movementSpeedY( Config.GHOST_MOVEMENT_SPEED_Y );
-            g2.setSize((int)((double)Config.GHOST_SIZE_X/(double)Config.WINDOW_SIZE_X * screenSize.width), (int)((double)Config.GHOST_SIZE_Y/(double)Config.WINDOW_SIZE_Y * screenSize.height));
-            g2.set_posX(g2.get_posX() / (double)oldScreenSize.width * (double)screenSize.width);
-            g2.set_posY(g2.get_posY() / (double)oldScreenSize.height * (double)screenSize.height);
-            g2.set_movementSpeedX( Config.GHOST_MOVEMENT_SPEED_X );
-            g2.set_movementSpeedY( Config.GHOST_MOVEMENT_SPEED_Y );
+        private void resizeGhosts(Dimension oldScreenSize) {
+            ghostManager.resize(oldScreenSize,screenSize);
         }
     }
 }

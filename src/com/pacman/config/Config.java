@@ -121,7 +121,7 @@ public class Config {
         PLAYER_SIZE_Y = GRID_Y;
         GHOST_MOVEMENT_SPEED_X = 4 * GRID_X;
         GHOST_MOVEMENT_SPEED_Y = 4 * GRID_X;
-        GHOST_SIZE_X = GRID_X;
-        GHOST_SIZE_Y = GRID_Y;
+        GHOST_SIZE_X = GRID_X * 4/5;
+        GHOST_SIZE_Y = GRID_Y * 4/5;
     }
 }
