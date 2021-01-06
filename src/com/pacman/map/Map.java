@@ -87,6 +87,7 @@ public class Map {
      * Returns the tile (0 OR 1) with given pos in GRIDs
      */
     public int getTile(int x, int y) {
+        if(x < 0 || x > Config.MAP_SIZE_X - 1 || y < 0 || y > Config.MAP_SIZE_Y - 1) return  1;
         return mapArray[x][y];
     }
     /**

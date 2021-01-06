@@ -50,11 +50,25 @@ public class Config {
      */
     public static int PLAYER_SIZE_Y;
     /**
-     * player movement speed is expressed in px/s
+     Ghost size horizontally.
+     */
+    public static int GHOST_SIZE_X;
+    /**
+     Ghost size vertically.
+     */
+    public static int GHOST_SIZE_Y;
+    /**
+     * Player movement speed is expressed in px/s
      * In game as a speed reference we will use GRID size
      */
     public static int PLAYER_MOVEMENT_SPEED_X;
     public static int PLAYER_MOVEMENT_SPEED_Y;
+    /**
+     * Ghost movement speed is expressed in px/s
+     * In game as a speed reference we will use GRID size
+     */
+    public static int GHOST_MOVEMENT_SPEED_X;
+    public static int GHOST_MOVEMENT_SPEED_Y;
     /**
      Default Constructor
      */
@@ -105,5 +119,9 @@ public class Config {
         PLAYER_MOVEMENT_SPEED_Y = 6*GRID_Y;
         PLAYER_SIZE_X = GRID_X;
         PLAYER_SIZE_Y = GRID_Y;
+        GHOST_MOVEMENT_SPEED_X = 4 * GRID_X;
+        GHOST_MOVEMENT_SPEED_Y = 4 * GRID_X;
+        GHOST_SIZE_X = GRID_X;
+        GHOST_SIZE_Y = GRID_Y;
     }
 }
