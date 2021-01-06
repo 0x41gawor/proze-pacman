@@ -70,6 +70,14 @@ public class Config {
     public static int GHOST_MOVEMENT_SPEED_X;
     public static int GHOST_MOVEMENT_SPEED_Y;
     /**
+     Ghost size horizontally.
+     */
+    public static int COLLECTABLE_SIZE_X;
+    /**
+     Ghost size vertically.
+     */
+    public static int COLLECTABLE_SIZE_Y;
+    /**
      Default Constructor
      */
     private Config() {
@@ -123,5 +131,7 @@ public class Config {
         GHOST_MOVEMENT_SPEED_Y = 4 * GRID_X;
         GHOST_SIZE_X = GRID_X * 4/5;
         GHOST_SIZE_Y = GRID_Y * 4/5;
+        COLLECTABLE_SIZE_X = GRID_X * 3/5;
+        COLLECTABLE_SIZE_Y = GRID_Y * 3/5;
     }
 }

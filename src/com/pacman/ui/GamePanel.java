@@ -2,8 +2,8 @@ package com.pacman.ui;
 
 import com.pacman.config.Config;
 import com.pacman.map.Map;
-import com.pacman.model.Ghost;
 import com.pacman.model.Player;
+import com.pacman.model.managers.CollectableManager;
 import com.pacman.model.managers.GhostManager;
 import com.pacman.ui.util.Clock;
 
@@ -50,8 +50,11 @@ public class GamePanel extends JPanel implements Runnable {
     /**
      Object representing pac-man
      */
-    Map map;
     Player player;
+    /**
+     Object representing map.
+     */
+    Map map;
     /**
      Measure time between frames.
      Used to keep constant speed of objects independently from FPS.
@@ -65,6 +68,10 @@ public class GamePanel extends JPanel implements Runnable {
      GhostManager
      */
     GhostManager ghostManager;
+    /**
+     CollectableManager
+     */
+    CollectableManager collectableManager;
 
     //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
@@ -74,9 +81,10 @@ public class GamePanel extends JPanel implements Runnable {
     GamePanel() {
         // Setting up the Game
         screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
-        player = new Player(Config.GRID_X + Config.GRID_X/2,Config.GRID_Y + Config.GRID_Y/2,Config.PLAYER_SIZE_X,Config.PLAYER_SIZE_Y,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
+        player = new Player(Config.GRID_X*9 + Config.GRID_X/2,Config.GRID_Y + Config.GRID_Y/2,Config.PLAYER_SIZE_X,Config.PLAYER_SIZE_Y,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
         map = new Map();
         ghostManager = new GhostManager(map);
+        collectableManager = new CollectableManager(map);
         // Setting up JPanel
         clock = new Clock();
         this.setFocusable(true); //they say it is focusable by default
@@ -131,6 +139,7 @@ public class GamePanel extends JPanel implements Runnable {
         map.draw(g);
         player.draw(g);
         ghostManager.draw(g);
+        collectableManager.draw(g);
 
         // IDK if that's necessary
         g.dispose();
@@ -158,12 +167,7 @@ public class GamePanel extends JPanel implements Runnable {
      * Set game into pause mode or resume the game
      */
     public void pause() {
-        if(!isPause) {
-            isPause = true;
-        }
-        else {
-            isPause = false;
-        }
+        isPause = !isPause;
     }
     //------------------------------------------------------------------------------------------------------------------ N E S T E D   C L A S S E S
     /**
@@ -193,6 +197,7 @@ public class GamePanel extends JPanel implements Runnable {
             newConfigValues();
             resizePlayer(oldScreenSize);
             resizeGhosts(oldScreenSize);
+            resizeCollectables(oldScreenSize);
         }
         /**
          * Resizing window means to resize GRID, and all things that depend on this
@@ -211,6 +216,8 @@ public class GamePanel extends JPanel implements Runnable {
             Config.GHOST_MOVEMENT_SPEED_Y = 4 * Config.GRID_Y;
             Config.GHOST_SIZE_X = (int)(0.8*Config.GRID_X);
             Config.GHOST_SIZE_Y = (int)(0.8*Config.GRID_Y);
+            Config.COLLECTABLE_SIZE_X = Config.GRID_X * 3/5;
+            Config.COLLECTABLE_SIZE_Y = Config.GRID_Y * 3/5;
         }
         /**
          * Resizing window means to resize PLAYER_SIZE and change his position
@@ -231,6 +238,9 @@ public class GamePanel extends JPanel implements Runnable {
          */
         private void resizeGhosts(Dimension oldScreenSize) {
             ghostManager.resize(oldScreenSize,screenSize);
+        }
+        private void resizeCollectables(Dimension oldScreenSize) {
+            collectableManager.resize(oldScreenSize,screenSize,map);
         }
     }
 }
