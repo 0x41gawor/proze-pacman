@@ -78,6 +78,26 @@ public class Config {
      */
     public static int COLLECTABLE_SIZE_Y;
     /**
+     * Time between spawning next gun
+     */
+    public static double GUN_RESPAWN_TIME;
+    /**
+     * How long gun stays on map
+     */
+    public static double GUN_LIFE_TIME;
+    /**
+     * Time between spawning next cherries
+     */
+    public static double CHERRIES_RESPAWN_TIME;
+    /**
+     * Time between spawning next berries
+     */
+    public static double BERRIES_RESPAWN_TIME;
+    /**
+     * How long berries stays on map
+     */
+    public static double BERRIES_LIFE_TIME;
+    /**
      Default Constructor
      */
     private Config() {
@@ -121,6 +141,11 @@ public class Config {
         GRID_X = Integer.parseInt(properties.getProperty("GRID_X"));
         GRID_Y = Integer.parseInt(properties.getProperty("GRID_Y"));
         FPS = Float.parseFloat(properties.getProperty("FPS"));
+        GUN_RESPAWN_TIME = Double.parseDouble(properties.getProperty("GUN_RESPAWN_TIME"));
+        GUN_LIFE_TIME = Double.parseDouble(properties.getProperty("GUN_LIFE_TIME"));
+        CHERRIES_RESPAWN_TIME = Double.parseDouble(properties.getProperty("CHERRIES_RESPAWN_TIME"));
+        BERRIES_RESPAWN_TIME = Double.parseDouble(properties.getProperty("BERRIES_RESPAWN_TIME"));
+        BERRIES_LIFE_TIME = Double.parseDouble(properties.getProperty("BERRIES_LIFE_TIME"));
 
         // Compute config values from the one read from file
         PLAYER_MOVEMENT_SPEED_X = 6*GRID_X;

@@ -28,13 +28,37 @@ public class CollectableManager {
      * Random generator for generating random position
      */
     Random random;
-
+    /**
+     * Time between spawning next gun
+     */
+    double GUN_RESPAWN_TIME;
+    /**
+     * How long gun stays on map
+     */
+    double GUN_LIFE_TIME;
+    /**
+     * Time between spawning next cherries
+     */
+    double CHERRIES_RESPAWN_TIME;
+    /**
+     * Time between spawning next berries
+     */
+    double BERRIES_RESPAWN_TIME;
+    /**
+     * How long berries stays on map
+     */
+    double BERRIES_LIFE_TIME;
     /**
      * Constructor
      */
     public CollectableManager(Map map) {
         collectableList = new ArrayList<Collectable>();
         random = new Random();
+        GUN_RESPAWN_TIME = Config.GUN_RESPAWN_TIME;
+        GUN_LIFE_TIME = Config.GUN_LIFE_TIME;
+        CHERRIES_RESPAWN_TIME = Config.CHERRIES_RESPAWN_TIME;
+        BERRIES_RESPAWN_TIME = Config.BERRIES_RESPAWN_TIME;
+        BERRIES_LIFE_TIME = Config.BERRIES_LIFE_TIME;
         // Create Cup
         //TODO hardcoded values !!!
         collectableList.add(collectableFactory(Collectable.Type.CUP, 9, 9));
@@ -71,6 +95,14 @@ public class CollectableManager {
      */
     public Collectable collectableFactory(Collectable.Type type, int posX, int posY) {
         return new Collectable(posX,posY, Config.COLLECTABLE_SIZE_X, Config.COLLECTABLE_SIZE_Y,type);
+    }
+    /**
+     * Update collectables list
+     *
+     * Should be called in GamePanel._update()
+     */
+    public void _update(double dt){
+
     }
     /**
      * Calls draw for all collectable items
