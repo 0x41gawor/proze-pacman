@@ -4,6 +4,7 @@ import com.pacman.map.Map;
 import com.pacman.model.Collectable;
 import com.pacman.model.Player;
 import com.pacman.model.managers.CollectableManager;
+import com.pacman.ui.GamePanel;
 import com.pacman.util.Vector;
 
 
@@ -43,7 +44,6 @@ public class GameLogic {
      Class store this value, because it needs to destroy tiles around the cup.
      */
     Vector<Integer> cupPosition;
-
     /**
      Constructor
      */
@@ -76,7 +76,10 @@ public class GameLogic {
                 case GUN -> System.out.println("GameLogic._update: GUN collected");
                 case CHERRIES -> System.out.println("GameLogic._update: CHERRIES collected");
                 case BERRIES -> System.out.println("GameLogic._update: BERRIES collected");
-                case CUP -> System.out.println("GameLogic._update: CUP collected");
+                case CUP -> {
+                    System.out.println("GameLogic._update: CUP collected");
+                    GamePanel.isGameOver = GamePanel.GameState.WIN;
+                }
             }
         }
     }

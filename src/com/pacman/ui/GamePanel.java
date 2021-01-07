@@ -3,6 +3,7 @@ package com.pacman.ui;
 import com.pacman.config.Config;
 import com.pacman.game.GameLogic;
 import com.pacman.map.Map;
+import com.pacman.model.Ghost;
 import com.pacman.model.Player;
 import com.pacman.model.managers.CollectableManager;
 import com.pacman.model.managers.GhostManager;
@@ -77,7 +78,13 @@ public class GamePanel extends JPanel implements Runnable {
      GameLogic
      */
     GameLogic gameLogic;
-
+    /**
+     if isGameOver is false it means game is not over, we can still play
+     if game is over we need to distinguish if player won or lose the game
+     thats why this member is not boolean
+     */
+    public enum GameState {FALSE, LOSE, WIN};
+    public static GameState isGameOver;
     //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
      Default Constructor
@@ -86,13 +93,14 @@ public class GamePanel extends JPanel implements Runnable {
     GamePanel() {
         // Setting up the Game
         screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
+        clock = new Clock();
+        isGameOver = GameState.FALSE;
         player = new Player(Config.GRID_X*9 + Config.GRID_X/2,Config.GRID_Y + Config.GRID_Y/2,Config.PLAYER_SIZE_X,Config.PLAYER_SIZE_Y,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
         map = new Map();
         ghostManager = new GhostManager(map);
         collectableManager = new CollectableManager(map);
-        gameLogic = new GameLogic(collectableManager, player,map);
+        gameLogic = new GameLogic(collectableManager, player, map);
         // Setting up JPanel
-        clock = new Clock();
         this.setFocusable(true); //they say it is focusable by default
         this.addKeyListener(new KeyboardHandler());
         this.addComponentListener(new ResizeHandler());
@@ -110,11 +118,14 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         double dt;
-        while(true) {
+        while(isGameOver == GameState.FALSE) {
             dt = clock.restart();
             if(!isPause) _update(dt);
             repaint();
             sleep();
+        }
+        if (isGameOver == GameState.WIN) {
+            System.out.println("Congratulations you have won");
         }
     }
     /**
