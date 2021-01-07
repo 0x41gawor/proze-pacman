@@ -68,17 +68,6 @@ public class Ghost extends Rectangle {
         this.color = color;
         random = new Random();
     }
-    //------------------------------------------------------------------------------------------------------------------ D R A W
-    /**
-     * Draws ghost with given Graphics
-     * Should be called in GamePanel.paint() in GhostManager.draw()
-     */
-    public void draw(Graphics g) {
-        g.setColor(color);
-        x = (int)posX-width/2;
-        y = (int)posY-height/2;
-        g.fillRect(x,y,width,height);
-    }
     //------------------------------------------------------------------------------------------------------------------ U P D A T E
     /**
      * Update ghost positions
@@ -104,6 +93,17 @@ public class Ghost extends Rectangle {
         _update_move(dt);
         // Set ghost at the centre of a tile
         _update_moveCorrection(map);
+    }
+    //------------------------------------------------------------------------------------------------------------------ D R A W
+    /**
+     * Draws ghost with given Graphics
+     * Should be called in GamePanel.paint() in GhostManager.draw()
+     */
+    public void draw(Graphics g) {
+        g.setColor(color);
+        x = (int)posX-width/2;
+        y = (int)posY-height/2;
+        g.fillRect(x,y,width,height);
     }
     /**
      * Scans area around ghost and chooses direction.
