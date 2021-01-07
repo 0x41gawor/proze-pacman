@@ -23,9 +23,24 @@ public class Map {
      */
     private final int[][] mapArray = new int[Config.MAP_SIZE_X][Config.MAP_SIZE_Y];
     /**
+    Cup position
+     */
+    Vector<Integer> cupPosition;
+    /**
+     Array list with dot positions
+     */
+    ArrayList<Vector<Integer>> dotPositions;
+    /**
+     * Number of ghosts
+     */
+    int ghostNumber;
+    /**
      Default constructor
      */
     public Map(){
+        cupPosition = new Vector<Integer>(0,0);
+        dotPositions = new ArrayList<>();
+        ghostNumber = 0;
         loadFromFile("level1.txt");
     }
     /**
@@ -47,6 +62,16 @@ public class Map {
                 System.out.print(pos + " ");
             }
             // < / temporarily here >
+            // Assign cup position
+            cupPosition = new Vector<Integer>(Integer.parseInt(positions.get(0)),Integer.parseInt(positions.get(1)));
+            // Assign dots positions
+            for (int i = 2; i<positions.size()-1; i+=2) {
+                dotPositions.add(new Vector<Integer>(Integer.parseInt(positions.get(i)),Integer.parseInt(positions.get(i+1))));
+            }
+            // Assign ghost number
+            line = reader.readLine();
+            ghostNumber = Integer.parseInt(line);
+            // Assign mapArray
             int x=0;
             int y=0;
             while (true) {
@@ -97,5 +122,22 @@ public class Map {
     public int[] getTileCords(double posX, double posY) {
         return new int[]{(int)posX/Config.GRID_X,(int)posY/Config.GRID_Y};
     }
-
+    /**
+     Return vector with cup position
+     */
+    public Vector<Integer> get_cupPosition() {
+        return cupPosition;
+    }
+    /**
+     Return ArrayList of dots positions
+     */
+    public  ArrayList<Vector<Integer>> get_dotPositions() {
+        return dotPositions;
+    }
+    /**
+     Return ghost number
+     */
+    public int get_ghostNumber() {
+        return ghostNumber;
+    }
 }
