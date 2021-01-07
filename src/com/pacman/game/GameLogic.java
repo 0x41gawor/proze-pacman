@@ -1,11 +1,16 @@
 package com.pacman.game;
 
+import com.pacman.config.Config;
 import com.pacman.map.Map;
 import com.pacman.model.Collectable;
+import com.pacman.model.Ghost;
 import com.pacman.model.Player;
 import com.pacman.model.managers.CollectableManager;
+import com.pacman.model.managers.GhostManager;
 import com.pacman.ui.GamePanel;
 import com.pacman.util.Vector;
+
+import java.awt.*;
 
 
 /**
@@ -29,6 +34,10 @@ public class GameLogic {
      */
     Map map;
     /**
+     Class needs some reference to GamePanel.ghostManager
+     */
+    GhostManager ghostManager;
+    /**
      Counter of dots collected by player.
      Class keeps track of it, because after player collects all dots
      we need to unlock the cup
@@ -47,10 +56,11 @@ public class GameLogic {
     /**
      Constructor
      */
-    public GameLogic(CollectableManager collectableManager, Player player, Map map) {
+    public GameLogic(CollectableManager collectableManager, Player player, Map map, GhostManager ghostManager) {
         this.collectableManager = collectableManager;
         this.player = player;
         this.map = map;
+        this.ghostManager = ghostManager;
         dotCounter = 0;
         maxDotCounter = map.get_maxDotCounter();
         cupPosition = map.get_cupPosition();
@@ -82,6 +92,10 @@ public class GameLogic {
                 }
             }
         }
+        // Collision with ghosts
+       if(ghostManager.checkCollision(player.getHitBox())) {
+           GamePanel.isGameOver = GamePanel.GameState.LOSE;
+       }
     }
     /**
     Sets mapArray around the cup to zeros.

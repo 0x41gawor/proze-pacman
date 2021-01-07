@@ -99,7 +99,7 @@ public class GamePanel extends JPanel implements Runnable {
         map = new Map();
         ghostManager = new GhostManager(map);
         collectableManager = new CollectableManager(map);
-        gameLogic = new GameLogic(collectableManager, player, map);
+        gameLogic = new GameLogic(collectableManager, player, map, ghostManager);
         // Setting up JPanel
         this.setFocusable(true); //they say it is focusable by default
         this.addKeyListener(new KeyboardHandler());
@@ -124,8 +124,9 @@ public class GamePanel extends JPanel implements Runnable {
             repaint();
             sleep();
         }
-        if (isGameOver == GameState.WIN) {
-            System.out.println("Congratulations you have won");
+        switch(isGameOver) {
+            case WIN -> System.out.println("Congratulations you have won");
+            case LOSE ->  System.out.println("You Lose");
         }
     }
     /**

@@ -182,6 +182,9 @@ public class Ghost extends Rectangle {
             posY = pos[1] * Config.GRID_Y + Config.GRID_Y/2;
         }
     }
+    public boolean checkCollision(Rectangle hitBox) {
+        return this.intersects(hitBox);
+    }
     //------------------------------------------------------------------------------------------------------------------ G E T T E R S
     /**
      * posX getter used in resizeHandler

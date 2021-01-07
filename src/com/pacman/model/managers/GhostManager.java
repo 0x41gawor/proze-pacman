@@ -3,9 +3,11 @@ package com.pacman.model.managers;
 
 import com.pacman.config.Config;
 import com.pacman.map.Map;
+import com.pacman.model.Collectable;
 import com.pacman.model.Ghost;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -40,6 +42,7 @@ public class GhostManager {
         ghostList = new ArrayList<Ghost>();
         random = new Random();
         colors = new String[]{"#fc7703", "#f003fc","#03fcf4","#65fc00","#fca503","#fba6ff","#03fc98","#187010"};
+
         // Add ghosts to the list
         for(int i=0; i<ghostNumber; i++) {
             ghostList.add(ghostFactory(map));
@@ -94,6 +97,15 @@ public class GhostManager {
         for (Ghost ghost: ghostList) {
             ghost._update(dt, map);
         }
+    }
+    public boolean checkCollision(Rectangle hitBox) {
+        for (Ghost ghost : ghostList) {
+            if (ghost.checkCollision(hitBox)) {
+                System.out.println("Dotknięto ducha");
+                return true;
+            }
+        }
+        return false;
     }
     /**
      * Calls draw for all ghost
