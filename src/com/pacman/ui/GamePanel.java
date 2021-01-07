@@ -119,6 +119,7 @@ public class GamePanel extends JPanel implements Runnable {
     private void _update(double dt) {
         player._update(dt,map);
         ghostManager._update(dt,map);
+        collectableManager._update(dt,map);
     }
     /**
      Paint the frame.

@@ -49,6 +49,26 @@ public class CollectableManager {
      */
     double BERRIES_LIFE_TIME;
     /**
+     * Timer for cherries respawning
+     */
+    double timerCherries;
+    /**
+     * Timer for gun respawning
+     */
+    double timerGun;
+    /**
+     * Check if gun is spawned
+     */
+    boolean isRespawningGun;
+    /**
+     * Timer for berries respawning
+     */
+    double timerBerries;
+    /**
+     * Check if berries is spawned
+     */
+    boolean isRespawningBerries;
+    /**
      * Constructor
      */
     public CollectableManager(Map map) {
@@ -59,6 +79,11 @@ public class CollectableManager {
         CHERRIES_RESPAWN_TIME = Config.CHERRIES_RESPAWN_TIME;
         BERRIES_RESPAWN_TIME = Config.BERRIES_RESPAWN_TIME;
         BERRIES_LIFE_TIME = Config.BERRIES_LIFE_TIME;
+        timerCherries = 0.0;
+        timerGun = 0.0;
+        isRespawningGun = true;
+        timerBerries = 0.0;
+        isRespawningBerries = true;
         // Create Cup
         //TODO hardcoded values !!!
         collectableList.add(collectableFactory(Collectable.Type.CUP, 9, 9));
@@ -68,12 +93,8 @@ public class CollectableManager {
         collectableList.add(collectableFactory(Collectable.Type.DOT, 19, 17));
         collectableList.add(collectableFactory(Collectable.Type.DOT, 1, 17));
         collectableList.add(collectableFactory(Collectable.Type.DOT, 19, 1));
-        // Create Gun
-        collectableList.add(collectableFactory(Collectable.Type.GUN, map));
         // Create Cherries
         collectableList.add(collectableFactory(Collectable.Type.CHERRIES, map));
-        // Create Berries
-        collectableList.add(collectableFactory(Collectable.Type.BERRIES, map));
     }
     /**
      * Creates collectable item with random position.
@@ -101,8 +122,46 @@ public class CollectableManager {
      *
      * Should be called in GamePanel._update()
      */
-    public void _update(double dt){
-
+    public void _update(double dt, Map map){
+        // Cherries
+        timerCherries += dt;
+        if (timerCherries > CHERRIES_RESPAWN_TIME) {
+            timerCherries = 0;
+            remove(Collectable.Type.CHERRIES);
+            collectableList.add(collectableFactory(Collectable.Type.CHERRIES, map));
+        }
+        // Gun
+        timerGun += dt;
+        if (isRespawningGun) {
+            if(timerGun > GUN_RESPAWN_TIME) {
+                timerGun = 0;
+                collectableList.add(collectableFactory(Collectable.Type.GUN, map));
+                isRespawningGun = false;
+            }
+        }
+        else {
+            if(timerGun > GUN_LIFE_TIME) {
+                timerGun = 0;
+                remove(Collectable.Type.GUN);
+                isRespawningGun = true;
+            }
+        }
+        // Berries
+        timerBerries += dt;
+        if (isRespawningBerries) {
+            if(timerBerries > BERRIES_RESPAWN_TIME) {
+                timerBerries = 0;
+                collectableList.add(collectableFactory(Collectable.Type.BERRIES, map));
+                isRespawningBerries = false;
+            }
+        }
+        else {
+            if(timerBerries > BERRIES_LIFE_TIME) {
+                timerBerries = 0;
+                remove(Collectable.Type.BERRIES);
+                isRespawningBerries = true;
+            }
+        }
     }
     /**
      * Calls draw for all collectable items
@@ -113,6 +172,19 @@ public class CollectableManager {
         for (Collectable collectable: collectableList) {
             collectable.draw(g);
         }
+    }
+    /**
+     * Delete first appearance of element with given type in list
+     */
+    private void remove(Collectable.Type type) {
+        int removeAt = 0;
+        for (int i=0; i<collectableList.size(); i++) {
+            if(collectableList.get(i).get_type()==type) {
+             removeAt=i;
+             break;
+            }
+        }
+        collectableList.remove(removeAt);
     }
     /**
      * Resize all collectable items one by one
