@@ -86,11 +86,9 @@ public class CollectableManager {
         timerBerries = 0.0;
         isRespawningBerries = true;
         // Create Cup
-        //TODO hardcoded values !!!
         Vector<Integer> cupPosition = map.get_cupPosition();
         collectableList.add(collectableFactory(Collectable.Type.CUP, cupPosition.x, cupPosition.y));
         // Create Dots
-        //TODO hardcoded values !!!
         ArrayList<Vector<Integer>> dotPositions = map.get_dotPositions();
         for (int i = 0; i<dotPositions.size(); i++) {
             collectableList.add(collectableFactory(Collectable.Type.DOT, dotPositions.get(i).x,dotPositions.get(i).y));
@@ -135,14 +133,14 @@ public class CollectableManager {
         // Gun
         timerGun += dt;
         if (isRespawningGun) {
-            if(timerGun > GUN_RESPAWN_TIME) {
+            if (timerGun > GUN_RESPAWN_TIME) {
                 timerGun = 0;
                 collectableList.add(collectableFactory(Collectable.Type.GUN, map));
                 isRespawningGun = false;
             }
         }
         else {
-            if(timerGun > GUN_LIFE_TIME) {
+            if (timerGun > GUN_LIFE_TIME) {
                 timerGun = 0;
                 remove(Collectable.Type.GUN);
                 isRespawningGun = true;
@@ -158,12 +156,37 @@ public class CollectableManager {
             }
         }
         else {
-            if(timerBerries > BERRIES_LIFE_TIME) {
+            if (timerBerries > BERRIES_LIFE_TIME) {
                 timerBerries = 0;
                 remove(Collectable.Type.BERRIES);
                 isRespawningBerries = true;
             }
         }
+    }
+    /**
+     * Checks collision with collectable items one by one
+     *
+     * If any of collectable items intersects with given hitBox method returns
+     * the type of this collectable item.
+     *
+     * If none of collectable items intersects with give hitBox method returns
+     * the null
+     *
+     * <Returns> Collectable.Type or Null</Returns>
+     */
+    public Collectable.Type checkCollision(Rectangle hitBox, Map map) {
+        for (Collectable collectable: collectableList) {
+            if(collectable.checkCollision(hitBox)) {
+                collectableList.remove(collectable);
+                // < TEMPORARY HERE > ///TODO
+                if (collectable.get_type() == Collectable.Type.CHERRIES) {
+                    collectableList.add(collectableFactory(Collectable.Type.CHERRIES, map));
+                }
+                // </ TEMPORARY HERE >
+                return collectable.get_type();
+            }
+        }
+        return null;
     }
     /**
      * Calls draw for all collectable items
@@ -177,16 +200,20 @@ public class CollectableManager {
     }
     /**
      * Delete first appearance of element with given type in list
+     *
+     * If no such element is found nothing happens
      */
     private void remove(Collectable.Type type) {
         int removeAt = 0;
+        boolean isFound = false;
         for (int i=0; i<collectableList.size(); i++) {
-            if(collectableList.get(i).get_type()==type) {
+            if (collectableList.get(i).get_type()==type) {
              removeAt=i;
+             isFound = true;
              break;
             }
         }
-        collectableList.remove(removeAt);
+        if(isFound) collectableList.remove(removeAt);
     }
     /**
      * Resize all collectable items one by one

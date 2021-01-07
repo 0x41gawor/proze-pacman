@@ -1,6 +1,7 @@
 package com.pacman.ui;
 
 import com.pacman.config.Config;
+import com.pacman.game.GameLogic;
 import com.pacman.map.Map;
 import com.pacman.model.Player;
 import com.pacman.model.managers.CollectableManager;
@@ -72,6 +73,10 @@ public class GamePanel extends JPanel implements Runnable {
      CollectableManager
      */
     CollectableManager collectableManager;
+    /**
+     GameLogic
+     */
+    GameLogic gameLogic;
 
     //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
@@ -85,6 +90,7 @@ public class GamePanel extends JPanel implements Runnable {
         map = new Map();
         ghostManager = new GhostManager(map);
         collectableManager = new CollectableManager(map);
+        gameLogic = new GameLogic(collectableManager, player,map);
         // Setting up JPanel
         clock = new Clock();
         this.setFocusable(true); //they say it is focusable by default
@@ -120,6 +126,7 @@ public class GamePanel extends JPanel implements Runnable {
         player._update(dt,map);
         ghostManager._update(dt,map);
         collectableManager._update(dt,map);
+        gameLogic._update();
     }
     /**
      Paint the frame.

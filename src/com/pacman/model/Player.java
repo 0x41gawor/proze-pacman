@@ -160,6 +160,14 @@ public class Player extends Rectangle {
      * posY getter used in resizeHandler
      */
     public double get_posY() { return posY; }
+    /**
+     * Get player as Rectangle
+     *
+     * Used to check collision
+     */
+    public Rectangle getHitBox() {
+        return new Rectangle(x,y,width,height);
+    }
     //------------------------------------------------------------------------------------------------------------------ S E T T E R S
     /**
      * posX setter used in resizeHandler
