@@ -35,12 +35,17 @@ public class Map {
      */
     int ghostNumber;
     /**
+     * Number of dots player needs to collect to unlock the cup
+     */
+    int maxDotCounter;
+    /**
      Default constructor
      */
     public Map(){
         cupPosition = new Vector<Integer>(0,0);
         dotPositions = new ArrayList<>();
         ghostNumber = 0;
+        maxDotCounter = 0;
         loadFromFile("level1.txt");
     }
     /**
@@ -56,12 +61,6 @@ public class Map {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line = reader.readLine();
             List<String> positions = new ArrayList<String>(Arrays.asList(line.split(" ")));
-            // <   temporarily here >
-            System.out.print("Positions: ");
-            for (String pos : positions){
-                System.out.print(pos + " ");
-            }
-            // < / temporarily here >
             // Assign cup position
             cupPosition = new Vector<Integer>(Integer.parseInt(positions.get(0)),Integer.parseInt(positions.get(1)));
             // Assign dots positions
@@ -71,6 +70,8 @@ public class Map {
             // Assign ghost number
             line = reader.readLine();
             ghostNumber = Integer.parseInt(line);
+            // Assign maxDotCounter
+            maxDotCounter = positions.size()/2-1;
             // Assign mapArray
             int x=0;
             int y=0;
@@ -123,6 +124,12 @@ public class Map {
         return new int[]{(int)posX/Config.GRID_X,(int)posY/Config.GRID_Y};
     }
     /**
+     * Set tile of pos x,y as the given value
+     */
+    public void setMapArray(int x, int y, int value) {
+       mapArray[x][y] = value;
+    }
+    /**
      Return vector with cup position
      */
     public Vector<Integer> get_cupPosition() {
@@ -139,5 +146,11 @@ public class Map {
      */
     public int get_ghostNumber() {
         return ghostNumber;
+    }
+    /**
+     Return maxDotCounter
+     */
+    public int get_maxDotCounter() {
+        return maxDotCounter;
     }
 }
