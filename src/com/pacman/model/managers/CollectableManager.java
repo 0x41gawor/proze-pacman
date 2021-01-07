@@ -3,6 +3,7 @@ package com.pacman.model.managers;
 import com.pacman.config.Config;
 import com.pacman.map.Map;
 import com.pacman.model.Collectable;
+import com.pacman.util.Vector;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -86,13 +87,14 @@ public class CollectableManager {
         isRespawningBerries = true;
         // Create Cup
         //TODO hardcoded values !!!
-        collectableList.add(collectableFactory(Collectable.Type.CUP, 9, 9));
+        Vector<Integer> cupPosition = map.get_cupPosition();
+        collectableList.add(collectableFactory(Collectable.Type.CUP, cupPosition.x, cupPosition.y));
         // Create Dots
         //TODO hardcoded values !!!
-        collectableList.add(collectableFactory(Collectable.Type.DOT, 5, 1));
-        collectableList.add(collectableFactory(Collectable.Type.DOT, 19, 17));
-        collectableList.add(collectableFactory(Collectable.Type.DOT, 1, 17));
-        collectableList.add(collectableFactory(Collectable.Type.DOT, 19, 1));
+        ArrayList<Vector<Integer>> dotPositions = map.get_dotPositions();
+        for (int i = 0; i<dotPositions.size(); i++) {
+            collectableList.add(collectableFactory(Collectable.Type.DOT, dotPositions.get(i).x,dotPositions.get(i).y));
+        }
         // Create Cherries
         collectableList.add(collectableFactory(Collectable.Type.CHERRIES, map));
     }

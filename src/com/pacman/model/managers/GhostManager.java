@@ -35,8 +35,7 @@ public class GhostManager {
      * Initializes members and creates ghosts with ghostFactory method.
      */
     public GhostManager(Map map) {
-        // TODO Read number of ghosts from map
-        int ghostNumber = 5;
+        int ghostNumber = map.get_ghostNumber();
         // Initialize members
         ghostList = new ArrayList<Ghost>();
         random = new Random();
