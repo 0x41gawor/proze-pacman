@@ -54,6 +54,14 @@ public class GameLogic {
      */
     Vector<Integer> cupPosition;
     /**
+     * How many points player scored
+     */
+    int score;
+    /**
+     * How many retries to complete level player have
+     */
+    int lives;
+    /**
      Constructor
      */
     public GameLogic(CollectableManager collectableManager, Player player, Map map, GhostManager ghostManager) {
@@ -64,6 +72,8 @@ public class GameLogic {
         dotCounter = 0;
         maxDotCounter = map.get_maxDotCounter();
         cupPosition = map.get_cupPosition();
+        score = 0;
+        lives = 3;
     }
     /**
      Checks collision with collectable items and ghost.
@@ -94,7 +104,10 @@ public class GameLogic {
         }
         // Collision with ghosts
        if(ghostManager.checkCollision(player.getHitBox())) {
-           GamePanel.isGameOver = GamePanel.GameState.LOSE;
+           System.out.println("GameLogic._update: Lives left: " + lives);
+           if(--lives <= 0) {
+               GamePanel.isGameOver = GamePanel.GameState.LOSE;
+           }
        }
     }
     /**

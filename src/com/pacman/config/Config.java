@@ -98,6 +98,10 @@ public class Config {
      */
     public static double BERRIES_LIFE_TIME;
     /**
+     * How many life player have on level
+     */
+    public  static int LIVES;
+    /**
      Default Constructor
      */
     private Config() {
@@ -146,6 +150,7 @@ public class Config {
         CHERRIES_RESPAWN_TIME = Double.parseDouble(properties.getProperty("CHERRIES_RESPAWN_TIME"));
         BERRIES_RESPAWN_TIME = Double.parseDouble(properties.getProperty("BERRIES_RESPAWN_TIME"));
         BERRIES_LIFE_TIME = Double.parseDouble(properties.getProperty("BERRIES_LIFE_TIME"));
+        LIVES = Integer.parseInt(properties.getProperty("LIVES"));
 
         // Compute config values from the one read from file
         PLAYER_MOVEMENT_SPEED_X = 6*GRID_X;
