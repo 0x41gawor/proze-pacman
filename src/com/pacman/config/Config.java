@@ -125,7 +125,18 @@ public class Config {
      * By how much speed is multiplied after collection of cherries
      */
     public static double CHERRIES_ACCELERATION_RATE;
-
+    /**
+     * Point we get for collection cherries
+     */
+    public static int POINTS_FOR_CHERRIES;
+    /**
+     *Point we get for collection cherries
+     */
+    public static int POINTS_FOR_BERRIES;
+    /**
+     *Point we get for killing ghost
+     */
+    public static int POINTS_FOR_GHOST_KILL;
     /**
      Default Constructor
      */
@@ -181,6 +192,9 @@ public class Config {
         RESPAWN_IMMORTALITY_TIME = Double.parseDouble(properties.getProperty("RESPAWN_IMMORTALITY_TIME"));
         CHERRIES_ACCELERATION_TIME = Double.parseDouble(properties.getProperty("CHERRIES_ACCELERATION_TIME"));
         CHERRIES_ACCELERATION_RATE = Double.parseDouble(properties.getProperty("CHERRIES_ACCELERATION_RATE"));
+        POINTS_FOR_CHERRIES = Integer.parseInt(properties.getProperty("POINTS_FOR_CHERRIES"));
+        POINTS_FOR_BERRIES = Integer.parseInt(properties.getProperty("POINTS_FOR_BERRIES"));
+        POINTS_FOR_GHOST_KILL = Integer.parseInt(properties.getProperty("POINTS_FOR_GHOST_KILL"));
 
         // Compute config values from the one read from file
         PLAYER_MOVEMENT_SPEED_X = PLAYER_MOVEMENT_SPEED*GRID_X;

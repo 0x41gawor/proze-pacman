@@ -3,7 +3,9 @@ package com.pacman.game;
 import com.pacman.config.Config;
 import com.pacman.map.Map;
 import com.pacman.model.Collectable;
+import com.pacman.model.Lives;
 import com.pacman.model.Player;
+import com.pacman.model.Score;
 import com.pacman.model.managers.CollectableManager;
 import com.pacman.model.managers.GhostManager;
 import com.pacman.ui.GamePanel;
@@ -93,15 +95,41 @@ public class GameLogic {
     /**
      * By how much speed is multiplied after collection of cherries
      */
-    public static double CHERRIES_ACCELERATION_RATE;;
+    public static double CHERRIES_ACCELERATION_RATE;
+    /**
+     * Reference to lives from gamePanel
+     */
+    Lives hearts;
+    /**
+     * Number of point we get after collection of dot
+     */
+    int POINTS_FOR_DOT;
+    /**
+     * Number of point we get after collection of cherries
+     */
+    int POINTS_FOR_CHERRIES;
+    /**
+     * Number of point we get after collection of berries
+     */
+    int POINTS_FOR_BERRIES;
+    /**
+     * Number of point we get after killing the ghost
+     */
+    int POINTS_FOR_GHOST_KILL;
+    /**
+     * Reference to score object
+     */
+    Score points;
     /**
      Constructor
      */
-    public GameLogic(CollectableManager collectableManager, Player player, Map map, GhostManager ghostManager) {
+    public GameLogic(CollectableManager collectableManager, Player player, Map map, GhostManager ghostManager, Lives hearts, Score points) {
         this.collectableManager = collectableManager;
         this.player = player;
         this.map = map;
         this.ghostManager = ghostManager;
+        this.hearts = hearts;
+        this.points = points;
         dotCounter = 0;
         maxDotCounter = map.get_maxDotCounter();
         cupPosition = map.get_cupPosition();
@@ -114,6 +142,10 @@ public class GameLogic {
         CHERRIES_ACCELERATION_TIME = Config.CHERRIES_ACCELERATION_TIME;
         CHERRIES_ACCELERATION_RATE = Config.CHERRIES_ACCELERATION_RATE;
         timerCherries = new LinkedList<Double>();
+        POINTS_FOR_DOT =  500/maxDotCounter;
+        POINTS_FOR_CHERRIES = Config.POINTS_FOR_CHERRIES;
+        POINTS_FOR_BERRIES = Config.POINTS_FOR_BERRIES;
+        POINTS_FOR_GHOST_KILL = Config.POINTS_FOR_GHOST_KILL;
     }
     /**
      Checks collision with collectable items and ghost.
@@ -126,6 +158,8 @@ public class GameLogic {
         if(type!=null){
             switch (type) {
                 case DOT -> {
+                    score += POINTS_FOR_DOT;
+                    points.increment(POINTS_FOR_DOT);
                     // Increment number of collected dots
                     // Unlock the cup if all Dots are collected
                     if(++dotCounter>=maxDotCounter) {
@@ -136,11 +170,15 @@ public class GameLogic {
                 case CHERRIES -> {
                     timerCherries.add(CHERRIES_ACCELERATION_TIME);
                     player.multiplySpeed(CHERRIES_ACCELERATION_RATE);
+                    score += POINTS_FOR_CHERRIES;
+                    points.increment(POINTS_FOR_CHERRIES);
                 }
                 case BERRIES -> {
                     // Set player immortality to true for a few seconds
                     isPlayerImmortal = true;
                     timerImmortality = BERRIES_IMMORTALITY_TIME;
+                    score += POINTS_FOR_BERRIES;
+                    points.increment(POINTS_FOR_BERRIES);
                 }
                 case CUP -> {
                     // Change isGameOver to true (WIN state)
@@ -168,14 +206,14 @@ public class GameLogic {
         }
         // Collision with ghosts
         if(ghostManager.checkCollision(player.getHitBox()) && !isPlayerImmortal) {
-            System.out.println("GameLogic._update: Lives left: " + lives);
             // Set immortality for the moment after respawn
             isPlayerImmortal = true;
             timerImmortality = RESPAWN_IMMORTALITY_TIME;
+            hearts.reduce();
             // Respawn player
             player.set_GridPos(map.get_playerSpawnPosition());
             // If no lives are left change isGameOver to true (LOSE state)
-            if(--lives < 0) {
+            if(--lives <= 0) {
                 GamePanel.isGameOver = GamePanel.GameState.LOSE;
             }
        }
