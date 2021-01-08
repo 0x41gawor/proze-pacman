@@ -2,6 +2,7 @@ package com.pacman.model;
 
 import com.pacman.config.Config;
 import com.pacman.map.Map;
+import com.pacman.util.Vector;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -46,10 +47,9 @@ public class Player extends Rectangle {
     /**
      Constructor
      */
-    public Player(int posX, int posY, int width, int height, int movementSpeedX, int movementSpeedY) {
-        super(posX,posY,width,height);
-        this.posX = posX;
-        this.posY = posY;
+    public Player(Vector<Integer> pos, int width, int height, int movementSpeedX, int movementSpeedY) {
+        super(pos.x*Config.GRID_X + Config.GRID_X/2,pos.y*Config.GRID_Y + Config.GRID_Y/2,width,height);
+        set_GridPos(pos);
         this.movementSpeedX = movementSpeedX;
         this.movementSpeedY = movementSpeedY;
     }
@@ -177,6 +177,13 @@ public class Player extends Rectangle {
      * posX setter used in resizeHandler
      */
     public void set_posY(double y) { this.posY = y; }
+    /**
+     * set grid position of player
+     */
+    public void set_GridPos(Vector<Integer> pos) {
+        this.posX = Config.GRID_X * pos.x + Config.GRID_X*0.5;
+        this.posY = Config.GRID_Y * pos.y + Config.GRID_Y*0.5;
+    }
     /**
      * movementSpeedX setter used in resizeHandler
      */

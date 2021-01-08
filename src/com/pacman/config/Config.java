@@ -110,6 +110,14 @@ public class Config {
      */
     public static int GHOST_MOVEMENT_SPEED;
     /**
+     * How long player is immortal after collecting berries
+     */
+    public static double BERRIES_IMMORTALITY_TIME;
+    /**
+     * How long player is immortal after respawn
+     */
+    public static double RESPAWN_IMMORTALITY_TIME;
+    /**
      Default Constructor
      */
     private Config() {
@@ -160,6 +168,9 @@ public class Config {
         LIVES = Integer.parseInt(properties.getProperty("LIVES"));
         PLAYER_MOVEMENT_SPEED = Integer.parseInt(properties.getProperty("PLAYER_MOVEMENT_SPEED"));
         GHOST_MOVEMENT_SPEED = Integer.parseInt(properties.getProperty("GHOST_MOVEMENT_SPEED"));
+        BERRIES_IMMORTALITY_TIME = Double.parseDouble(properties.getProperty("BERRIES_IMMORTALITY_TIME"));
+        RESPAWN_IMMORTALITY_TIME = Double.parseDouble(properties.getProperty("RESPAWN_IMMORTALITY_TIME"));
+
         // Compute config values from the one read from file
         PLAYER_MOVEMENT_SPEED_X = PLAYER_MOVEMENT_SPEED*GRID_X;
         PLAYER_MOVEMENT_SPEED_Y = PLAYER_MOVEMENT_SPEED*GRID_Y;
