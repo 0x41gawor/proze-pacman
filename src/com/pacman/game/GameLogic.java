@@ -9,6 +9,8 @@ import com.pacman.model.managers.GhostManager;
 import com.pacman.ui.GamePanel;
 import com.pacman.util.Vector;
 
+import java.util.LinkedList;
+
 
 /**
  Class responsible for reacting to player colliding with
@@ -63,13 +65,35 @@ public class GameLogic {
      */
     boolean isPlayerImmortal;
     /**
-     * Timer of player immortality
+     * How long player is immortal
+     *
+     * Applies to immortality after respawn
      */
-    double immortalTimer;
+    double RESPAWN_IMMORTALITY_TIME;
     /**
      * How long player is immortal
+     *
+     * Applies to immortality after collecting berries
      */
-    double IMMORTAL_TIME;
+    double BERRIES_IMMORTALITY_TIME;
+    /**
+     * Timer of player immortality
+     *
+     * Applies to both immortalities
+     */
+    double timerImmortality;
+    /**
+     * Each collection of cherries starts a timer that counts down the time the player has increased speed
+     */
+    LinkedList<Double> timerCherries;
+    /**
+     * How long acceleration after collection of cherries last
+     */
+    double CHERRIES_ACCELERATION_TIME;
+    /**
+     * By how much speed is multiplied after collection of cherries
+     */
+    public static double CHERRIES_ACCELERATION_RATE;;
     /**
      Constructor
      */
@@ -84,8 +108,12 @@ public class GameLogic {
         score = 0;
         lives = Config.LIVES;
         isPlayerImmortal = false;
-        immortalTimer = 0;
-        IMMORTAL_TIME=2;
+        RESPAWN_IMMORTALITY_TIME = Config.RESPAWN_IMMORTALITY_TIME;
+        BERRIES_IMMORTALITY_TIME = Config.BERRIES_IMMORTALITY_TIME;
+        timerImmortality = 0;
+        CHERRIES_ACCELERATION_TIME = Config.CHERRIES_ACCELERATION_TIME;
+        CHERRIES_ACCELERATION_RATE = Config.CHERRIES_ACCELERATION_RATE;
+        timerCherries = new LinkedList<Double>();
     }
     /**
      Checks collision with collectable items and ghost.
@@ -98,7 +126,6 @@ public class GameLogic {
         if(type!=null){
             switch (type) {
                 case DOT -> {
-                    System.out.println("GameLogic._update: DOT  collected");
                     // Increment number of collected dots
                     // Unlock the cup if all Dots are collected
                     if(++dotCounter>=maxDotCounter) {
@@ -106,29 +133,51 @@ public class GameLogic {
                     }
                 }
                 case GUN -> System.out.println("GameLogic._update: GUN collected");
-                case CHERRIES -> System.out.println("GameLogic._update: CHERRIES collected");
-                case BERRIES -> System.out.println("GameLogic._update: BERRIES collected");
+                case CHERRIES -> {
+                    timerCherries.add(CHERRIES_ACCELERATION_TIME);
+                    player.multiplySpeed(CHERRIES_ACCELERATION_RATE);
+                }
+                case BERRIES -> {
+                    // Set player immortality to true for a few seconds
+                    isPlayerImmortal = true;
+                    timerImmortality = BERRIES_IMMORTALITY_TIME;
+                }
                 case CUP -> {
-                    System.out.println("GameLogic._update: CUP collected");
+                    // Change isGameOver to true (WIN state)
                     GamePanel.isGameOver = GamePanel.GameState.WIN;
                 }
             }
         }
+        // If player is immortal we need to count down the remaining time of immortality
         if (isPlayerImmortal) {
-            immortalTimer -= dt;
-            if(immortalTimer<0) {
+            if( (timerImmortality -= dt) < 0) {
                 isPlayerImmortal = false;
-                System.out.println("You are mortal again!");
+            }
+        }
+        // Dealing with CHERRIES timers
+        // Decreasing each timer by dt
+        for (int i=0; i < timerCherries.size(); i++) {
+            timerCherries.set(i, timerCherries.get(i)-dt);
+        }
+        // If first element of list is less than zero it means the first buff ended
+        if (timerCherries.size() != 0) {
+            if (timerCherries.getFirst() < 0) {
+                timerCherries.removeFirst();
+                player.multiplySpeed(1/CHERRIES_ACCELERATION_RATE);
             }
         }
         // Collision with ghosts
-       if(ghostManager.checkCollision(player.getHitBox()) && !isPlayerImmortal) {
-           System.out.println("GameLogic._update: Lives left: " + lives);
-           isPlayerImmortal = true;
-           immortalTimer = 2;
-           if(--lives < 0) {
-               GamePanel.isGameOver = GamePanel.GameState.LOSE;
-           }
+        if(ghostManager.checkCollision(player.getHitBox()) && !isPlayerImmortal) {
+            System.out.println("GameLogic._update: Lives left: " + lives);
+            // Set immortality for the moment after respawn
+            isPlayerImmortal = true;
+            timerImmortality = RESPAWN_IMMORTALITY_TIME;
+            // Respawn player
+            player.set_GridPos(map.get_playerSpawnPosition());
+            // If no lives are left change isGameOver to true (LOSE state)
+            if(--lives < 0) {
+                GamePanel.isGameOver = GamePanel.GameState.LOSE;
+            }
        }
     }
     /**

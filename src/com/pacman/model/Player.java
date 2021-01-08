@@ -2,6 +2,7 @@ package com.pacman.model;
 
 import com.pacman.config.Config;
 import com.pacman.map.Map;
+import com.pacman.util.Vector;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -46,10 +47,9 @@ public class Player extends Rectangle {
     /**
      Constructor
      */
-    public Player(int posX, int posY, int width, int height, int movementSpeedX, int movementSpeedY) {
-        super(posX,posY,width,height);
-        this.posX = posX;
-        this.posY = posY;
+    public Player(Vector<Integer> pos, int width, int height, double movementSpeedX, double movementSpeedY) {
+        super(pos.x*Config.GRID_X + Config.GRID_X/2,pos.y*Config.GRID_Y + Config.GRID_Y/2,width,height);
+        set_GridPos(pos);
         this.movementSpeedX = movementSpeedX;
         this.movementSpeedY = movementSpeedY;
     }
@@ -112,6 +112,18 @@ public class Player extends Rectangle {
         if(movementY != -1 && !downBanned || movementY !=1 && !upBanned) {
             posY = posY + movementY * movementSpeedY * dt;
         }
+    }
+    /**
+     * Multiply player speed
+     *
+     * Used to speed up player after collection of cherries
+     */
+    public void multiplySpeed(double multiplier) {
+        movementSpeedX *= multiplier;
+        movementSpeedY *= multiplier;
+        // See GamePanel.ResizeHandler.resizePlayer()
+        Config.PLAYER_MOVEMENT_SPEED_X *= multiplier;
+        Config.PLAYER_MOVEMENT_SPEED_Y *= multiplier;
     }
     //------------------------------------------------------------------------------------------------------------------ K E Y   H A N D L E R
     /**
@@ -178,11 +190,18 @@ public class Player extends Rectangle {
      */
     public void set_posY(double y) { this.posY = y; }
     /**
+     * set grid position of player
+     */
+    public void set_GridPos(Vector<Integer> pos) {
+        this.posX = Config.GRID_X * pos.x + Config.GRID_X*0.5;
+        this.posY = Config.GRID_Y * pos.y + Config.GRID_Y*0.5;
+    }
+    /**
      * movementSpeedX setter used in resizeHandler
      */
-    public void set_movementSpeedX(int movementSpeedX) { this.movementSpeedX = movementSpeedX; }
+    public void set_movementSpeedX(double movementSpeedX) { this.movementSpeedX = movementSpeedX; }
     /**
      * movementSpeedY setter used in resizeHandler
      */
-    public void set_movementSpeedY(int movementSpeedY) { this.movementSpeedY = movementSpeedY; }
+    public void set_movementSpeedY(double movementSpeedY) { this.movementSpeedY = movementSpeedY; }
 }

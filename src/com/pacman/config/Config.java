@@ -61,8 +61,8 @@ public class Config {
      * Player movement speed is expressed in px/s
      * In game as a speed reference we will use GRID size
      */
-    public static int PLAYER_MOVEMENT_SPEED_X;
-    public static int PLAYER_MOVEMENT_SPEED_Y;
+    public static double PLAYER_MOVEMENT_SPEED_X;
+    public static double PLAYER_MOVEMENT_SPEED_Y;
     /**
      * Ghost movement speed is expressed in px/s
      * In game as a speed reference we will use GRID size
@@ -102,13 +102,30 @@ public class Config {
      */
     public  static int LIVES;
     /**
-     * Player movement speeed as multiplier of GRID/s
+     * Player movement speed as multiplier of GRID/s
      */
     public static int PLAYER_MOVEMENT_SPEED;
     /**
-     * Player movement speeed as
+     * Player movement speed as multiplier of GRID/s
      */
     public static int GHOST_MOVEMENT_SPEED;
+    /**
+     * How long player is immortal after collecting berries
+     */
+    public static double BERRIES_IMMORTALITY_TIME;
+    /**
+     * How long player is immortal after respawn
+     */
+    public static double RESPAWN_IMMORTALITY_TIME;
+    /**
+     * How long acceleration after collection of cherries last
+     */
+    public static double CHERRIES_ACCELERATION_TIME;
+    /**
+     * By how much speed is multiplied after collection of cherries
+     */
+    public static double CHERRIES_ACCELERATION_RATE;
+
     /**
      Default Constructor
      */
@@ -160,6 +177,11 @@ public class Config {
         LIVES = Integer.parseInt(properties.getProperty("LIVES"));
         PLAYER_MOVEMENT_SPEED = Integer.parseInt(properties.getProperty("PLAYER_MOVEMENT_SPEED"));
         GHOST_MOVEMENT_SPEED = Integer.parseInt(properties.getProperty("GHOST_MOVEMENT_SPEED"));
+        BERRIES_IMMORTALITY_TIME = Double.parseDouble(properties.getProperty("BERRIES_IMMORTALITY_TIME"));
+        RESPAWN_IMMORTALITY_TIME = Double.parseDouble(properties.getProperty("RESPAWN_IMMORTALITY_TIME"));
+        CHERRIES_ACCELERATION_TIME = Double.parseDouble(properties.getProperty("CHERRIES_ACCELERATION_TIME"));
+        CHERRIES_ACCELERATION_RATE = Double.parseDouble(properties.getProperty("CHERRIES_ACCELERATION_RATE"));
+
         // Compute config values from the one read from file
         PLAYER_MOVEMENT_SPEED_X = PLAYER_MOVEMENT_SPEED*GRID_X;
         PLAYER_MOVEMENT_SPEED_Y = PLAYER_MOVEMENT_SPEED*GRID_Y;

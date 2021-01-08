@@ -23,6 +23,10 @@ public class Map {
      */
     private final int[][] mapArray = new int[Config.MAP_SIZE_X][Config.MAP_SIZE_Y];
     /**
+     Player spawn position
+     */
+    Vector<Integer> playerSpawnPosition;
+    /**
     Cup position
      */
     Vector<Integer> cupPosition;
@@ -61,17 +65,19 @@ public class Map {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line = reader.readLine();
             List<String> positions = new ArrayList<String>(Arrays.asList(line.split(" ")));
+            // Assign player spawn position
+            playerSpawnPosition = new Vector<Integer>(Integer.parseInt(positions.get(0)),Integer.parseInt(positions.get(1)));
             // Assign cup position
-            cupPosition = new Vector<Integer>(Integer.parseInt(positions.get(0)),Integer.parseInt(positions.get(1)));
+            cupPosition = new Vector<Integer>(Integer.parseInt(positions.get(2)),Integer.parseInt(positions.get(3)));
             // Assign dots positions
-            for (int i = 2; i<positions.size()-1; i+=2) {
+            for (int i = 4; i<positions.size()-1; i+=2) {
                 dotPositions.add(new Vector<Integer>(Integer.parseInt(positions.get(i)),Integer.parseInt(positions.get(i+1))));
             }
             // Assign ghost number
             line = reader.readLine();
             ghostNumber = Integer.parseInt(line);
             // Assign maxDotCounter
-            maxDotCounter = positions.size()/2-1;
+            maxDotCounter = positions.size()/2-2;
             // Assign mapArray
             int x=0;
             int y=0;
@@ -128,6 +134,12 @@ public class Map {
      */
     public void setMapArray(int x, int y, int value) {
        mapArray[x][y] = value;
+    }
+    /**
+     Return vector with player spawn position
+     */
+    public Vector<Integer> get_playerSpawnPosition() {
+        return playerSpawnPosition;
     }
     /**
      Return vector with cup position

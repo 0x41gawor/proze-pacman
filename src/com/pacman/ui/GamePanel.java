@@ -95,8 +95,8 @@ public class GamePanel extends JPanel implements Runnable {
         screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
         clock = new Clock();
         isGameOver = GameState.FALSE;
-        player = new Player(Config.GRID_X*9 + Config.GRID_X/2,Config.GRID_Y + Config.GRID_Y/2,Config.PLAYER_SIZE_X,Config.PLAYER_SIZE_Y,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
         map = new Map();
+        player = new Player(map.get_playerSpawnPosition(),Config.PLAYER_SIZE_X,Config.PLAYER_SIZE_Y,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
         ghostManager = new GhostManager(map);
         collectableManager = new CollectableManager(map);
         gameLogic = new GameLogic(collectableManager, player, map, ghostManager);
