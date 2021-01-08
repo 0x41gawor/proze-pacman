@@ -9,6 +9,8 @@ import com.pacman.model.managers.GhostManager;
 import com.pacman.ui.GamePanel;
 import com.pacman.util.Vector;
 
+import java.util.LinkedList;
+
 
 /**
  Class responsible for reacting to player colliding with
@@ -81,6 +83,18 @@ public class GameLogic {
      */
     double timerImmortality;
     /**
+     * Each collection of cherries starts a timer that counts down the time the player has increased speed
+     */
+    LinkedList<Double> timerCherries;
+    /**
+     * How long acceleration after collection of cherries last
+     */
+    double CHERRIES_ACCELERATION_TIME;
+    /**
+     * By how much speed is multiplied after collection of cherries
+     */
+    public static double CHERRIES_ACCELERATION_RATE;;
+    /**
      Constructor
      */
     public GameLogic(CollectableManager collectableManager, Player player, Map map, GhostManager ghostManager) {
@@ -97,6 +111,9 @@ public class GameLogic {
         RESPAWN_IMMORTALITY_TIME = Config.RESPAWN_IMMORTALITY_TIME;
         BERRIES_IMMORTALITY_TIME = Config.BERRIES_IMMORTALITY_TIME;
         timerImmortality = 0;
+        CHERRIES_ACCELERATION_TIME = Config.CHERRIES_ACCELERATION_TIME;
+        CHERRIES_ACCELERATION_RATE = Config.CHERRIES_ACCELERATION_RATE;
+        timerCherries = new LinkedList<Double>();
     }
     /**
      Checks collision with collectable items and ghost.
@@ -116,7 +133,10 @@ public class GameLogic {
                     }
                 }
                 case GUN -> System.out.println("GameLogic._update: GUN collected");
-                case CHERRIES -> System.out.println("GameLogic._update: CHERRIES collected");
+                case CHERRIES -> {
+                    timerCherries.add(CHERRIES_ACCELERATION_TIME);
+                    player.multiplySpeed(CHERRIES_ACCELERATION_RATE);
+                }
                 case BERRIES -> {
                     // Set player immortality to true for a few seconds
                     isPlayerImmortal = true;
@@ -132,6 +152,18 @@ public class GameLogic {
         if (isPlayerImmortal) {
             if( (timerImmortality -= dt) < 0) {
                 isPlayerImmortal = false;
+            }
+        }
+        // Dealing with CHERRIES timers
+        // Decreasing each timer by dt
+        for (int i=0; i < timerCherries.size(); i++) {
+            timerCherries.set(i, timerCherries.get(i)-dt);
+        }
+        // If first element of list is less than zero it means the first buff ended
+        if (timerCherries.size() != 0) {
+            if (timerCherries.getFirst() < 0) {
+                timerCherries.removeFirst();
+                player.multiplySpeed(1/CHERRIES_ACCELERATION_RATE);
             }
         }
         // Collision with ghosts
