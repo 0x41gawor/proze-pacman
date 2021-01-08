@@ -96,6 +96,9 @@ public class GhostManager {
             ghost._update(dt, map);
         }
     }
+    /**
+     * True if hitBox intersects with any of ghosts
+     */
     public boolean checkCollision(Rectangle hitBox) {
         for (Ghost ghost : ghostList) {
             if (ghost.checkCollision(hitBox)) {
@@ -103,6 +106,12 @@ public class GhostManager {
             }
         }
         return false;
+    }
+    /**
+     * Return reference to ghost list
+     */
+    public ArrayList<Ghost> get_ghostList() {
+        return ghostList;
     }
     /**
      * Calls draw for all ghost

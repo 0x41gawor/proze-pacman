@@ -32,19 +32,18 @@ public class Missile extends Rectangle {
      * - size of missile
      * - direction in which missile is fired
      */
-    Missile(Vector<java.lang.Double> pos, int width, int height, Ghost.Direction dir) {
+    public Missile(Vector<java.lang.Double> pos, int width, int height, Ghost.Direction dir) {
         super(pos.x.intValue(), pos.y.intValue(), width, height);
         this.pos = pos;
         movement = new Vector<Integer>(0,0);
-        //TODO Hardcoded value!!! Add fields to Config class
-        movementSpeed = new Vector<java.lang.Double>((double)6* Config.GRID_X,(double)6* Config.GRID_Y);
+        movementSpeed = new Vector<java.lang.Double>((double)Config.BULLET_SPEED* Config.GRID_X,(double)Config.BULLET_SPEED* Config.GRID_Y);
         switch (dir) {
             case LEFT -> {
-                movement.x = 1;
+                movement.x = -1;
                 movement.y = 0;
             }
             case RIGHT -> {
-                movement.x = -1;
+                movement.x = 1;
                 movement.y = 0;
             }
             case UP -> {
