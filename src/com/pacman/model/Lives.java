@@ -52,8 +52,5 @@ public class Lives {
     public void resize(Dimension screenSize) {
          width =  Config.GRID_X;
          height =  Config.GRID_Y;
-         System.out.println("Lives.resize width: " + width);
-         System.out.println("Lives.resize height: " + height);
     }
 }
-

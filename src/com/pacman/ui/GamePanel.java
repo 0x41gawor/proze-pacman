@@ -6,6 +6,7 @@ import com.pacman.map.Map;
 import com.pacman.model.Ghost;
 import com.pacman.model.Lives;
 import com.pacman.model.Player;
+import com.pacman.model.Score;
 import com.pacman.model.managers.CollectableManager;
 import com.pacman.model.managers.GhostManager;
 import com.pacman.ui.util.Clock;
@@ -85,6 +86,10 @@ public class GamePanel extends JPanel implements Runnable {
      */
     Lives lives;
     /**
+     Score
+     */
+    Score score;
+    /**
      if isGameOver is false it means game is not over, we can still play
      if game is over we need to distinguish if player won or lose the game
      thats why this member is not boolean
@@ -106,12 +111,14 @@ public class GamePanel extends JPanel implements Runnable {
         ghostManager = new GhostManager(map);
         collectableManager = new CollectableManager(map);
         lives = new Lives(new Vector<>(0,0), Config.GRID_X, Config.GRID_Y);
-        gameLogic = new GameLogic(collectableManager, player, map, ghostManager, lives);
+        score = new Score(new Vector<>(18*Config.GRID_X, Config.GRID_Y/2), 15);
+        gameLogic = new GameLogic(collectableManager, player, map, ghostManager, lives, score);
         // Setting up JPanel
         this.setFocusable(true); //they say it is focusable by default
         this.addKeyListener(new KeyboardHandler());
         this.addComponentListener(new ResizeHandler());
         this.setPreferredSize(screenSize);
+
 
         // Starting thread for gameplay, this will fire run() method
         gameThread = new Thread(this);
@@ -168,6 +175,7 @@ public class GamePanel extends JPanel implements Runnable {
         ghostManager.draw(g);
         collectableManager.draw(g);
         lives.draw(g);
+        score.draw(g);
         // IDK if that's necessary
         g.dispose();
     }
@@ -225,7 +233,8 @@ public class GamePanel extends JPanel implements Runnable {
             resizePlayer(oldScreenSize);
             resizeGhosts(oldScreenSize);
             resizeCollectables(oldScreenSize);
-            resizeLives(screenSize);
+            resizeLives();
+            resizeScore(oldScreenSize);
         }
         /**
          * Resizing window means to resize GRID, and all things that depend on this
@@ -267,11 +276,23 @@ public class GamePanel extends JPanel implements Runnable {
         private void resizeGhosts(Dimension oldScreenSize) {
             ghostManager.resize(oldScreenSize,screenSize);
         }
+        /**
+         * Resize collectable items
+         */
         private void resizeCollectables(Dimension oldScreenSize) {
             collectableManager.resize(oldScreenSize,screenSize,map);
         }
-        private void  resizeLives(Dimension ScreenSize) {
-            lives.resize(ScreenSize);
+        /**
+         * Resize lives
+         */
+        private void  resizeLives() {
+            lives.resize(screenSize);
+        }
+        /**
+         * Resize score
+         */
+        private void resizeScore(Dimension oldScreenSize) {
+            score.resize(screenSize, oldScreenSize);
         }
     }
 }
