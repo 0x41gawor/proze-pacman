@@ -49,7 +49,6 @@ public class Score {
     public void resize(Dimension screenSize, Dimension oldScreenSize) {
         size = (int)((15.0/40.0*(double)Config.GRID_X)+(15.0/40.0*(double)Config.GRID_Y))/2;
         font = new Font(Font.MONOSPACED, Font.BOLD, size);
-        System.out.println("Score.resize (size1+size2)/2: " + size);
         pos.x = (Config.MAP_SIZE_X-3) * Config.GRID_X;
         pos.y = Config.GRID_Y/2;
     }

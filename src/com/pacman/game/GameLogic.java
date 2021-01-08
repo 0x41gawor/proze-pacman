@@ -2,12 +2,10 @@ package com.pacman.game;
 
 import com.pacman.config.Config;
 import com.pacman.map.Map;
-import com.pacman.model.Collectable;
-import com.pacman.model.Lives;
-import com.pacman.model.Player;
-import com.pacman.model.Score;
+import com.pacman.model.*;
 import com.pacman.model.managers.CollectableManager;
 import com.pacman.model.managers.GhostManager;
+import com.pacman.model.managers.Gun;
 import com.pacman.ui.GamePanel;
 import com.pacman.util.Vector;
 
@@ -122,15 +120,25 @@ public class GameLogic {
      */
     Score points;
     /**
+     * Number of missiles player can fire
+     */
+    int ammo;
+    /**
+     * Reference for a gun from GamePanel
+     */
+    Gun gun;
+
+    /**
      Constructor
      */
-    public GameLogic(CollectableManager collectableManager, Player player, Map map, GhostManager ghostManager, Lives hearts, Score points) {
+    public GameLogic(CollectableManager collectableManager, Player player, Map map, GhostManager ghostManager, Lives hearts, Score points, Gun gun) {
         this.collectableManager = collectableManager;
         this.player = player;
         this.map = map;
         this.ghostManager = ghostManager;
         this.hearts = hearts;
         this.points = points;
+        this.gun = gun;
         dotCounter = 0;
         maxDotCounter = map.get_maxDotCounter();
         cupPosition = map.get_cupPosition();
@@ -147,6 +155,7 @@ public class GameLogic {
         POINTS_FOR_CHERRIES = Config.POINTS_FOR_CHERRIES;
         POINTS_FOR_BERRIES = Config.POINTS_FOR_BERRIES;
         POINTS_FOR_GHOST_KILL = Config.POINTS_FOR_GHOST_KILL;
+        ammo = 0;
     }
     /**
      Checks collision with collectable items and ghost.
@@ -167,7 +176,9 @@ public class GameLogic {
                         unlockTheCup();
                     }
                 }
-                case GUN -> System.out.println("GameLogic._update: GUN collected");
+                case GUN -> {
+                    ammo+=Config.AMMO_FOR_PICKING_GUN;
+                }
                 case CHERRIES -> {
                     timerCherries.add(CHERRIES_ACCELERATION_TIME);
                     player.multiplySpeed(CHERRIES_ACCELERATION_RATE);
@@ -221,6 +232,14 @@ public class GameLogic {
                 GamePanel.isGameOver = GamePanel.GameState.LOSE;
             }
        }
+        // Killing ghosts
+        for (Ghost ghost: ghostManager.get_ghostList()) {
+            if(gun.checkCollision(ghost.getBounds())){
+                ghostManager.get_ghostList().remove(ghost);
+                score+=POINTS_FOR_GHOST_KILL;
+                break;
+            }
+        }
     }
     /**
     Sets mapArray around the cup to zeros.
@@ -238,5 +257,16 @@ public class GameLogic {
         map.setMapArray(cupPosition.x+1, cupPosition.y+2,0);
         map.setMapArray(cupPosition.x, cupPosition.y-2,0);
         map.setMapArray(cupPosition.x, cupPosition.y+2,0);
+    }
+    /**
+     Fire a gun
+
+     Should be called in KeyboardHandler
+     */
+    public void shoot() {
+        if(ammo > 0) {
+            gun.fire(new Vector<Double>(player.get_posX(), player.get_posY()), 10, 10, player.get_dir());
+            ammo--;
+        }
     }
 }

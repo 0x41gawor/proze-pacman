@@ -138,6 +138,15 @@ public class Config {
      */
     public static int POINTS_FOR_GHOST_KILL;
     /**
+     * Number of missiles player can fire after picking a gun
+     */
+    public static int AMMO_FOR_PICKING_GUN;
+    /**
+     * Bullet speed as mulitiplier of GRID
+     */
+    public static int BULLET_SPEED;
+
+    /**
      Default Constructor
      */
     private Config() {
@@ -195,6 +204,8 @@ public class Config {
         POINTS_FOR_CHERRIES = Integer.parseInt(properties.getProperty("POINTS_FOR_CHERRIES"));
         POINTS_FOR_BERRIES = Integer.parseInt(properties.getProperty("POINTS_FOR_BERRIES"));
         POINTS_FOR_GHOST_KILL = Integer.parseInt(properties.getProperty("POINTS_FOR_GHOST_KILL"));
+        AMMO_FOR_PICKING_GUN = Integer.parseInt(properties.getProperty("AMMO_FOR_PICKING_GUN"));
+        BULLET_SPEED = Integer.parseInt(properties.getProperty("BULLET_SPEED"));
 
         // Compute config values from the one read from file
         PLAYER_MOVEMENT_SPEED_X = PLAYER_MOVEMENT_SPEED*GRID_X;

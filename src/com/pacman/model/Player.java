@@ -46,6 +46,10 @@ public class Player extends Rectangle {
      Color of player
      */
     Color color;
+    /**
+     Direction where player moved last
+     */
+    Ghost.Direction dir;
 
     //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
@@ -138,15 +142,19 @@ public class Player extends Rectangle {
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode()==KeyEvent.VK_UP) {
             movementY = -1;
+            dir = Ghost.Direction.UP;
         }
         if(e.getKeyCode()==KeyEvent.VK_DOWN) {
             movementY = 1;
+            dir = Ghost.Direction.DOWN;
         }
         if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
             movementX = 1;
+            dir = Ghost.Direction.RIGHT;
         }
         if(e.getKeyCode()==KeyEvent.VK_LEFT) {
             movementX = -1;
+            dir = Ghost.Direction.LEFT;
         }
     }
     /**
@@ -166,7 +174,6 @@ public class Player extends Rectangle {
         if(e.getKeyCode() == KeyEvent.VK_RIGHT && movementX == 1) {
             movementX = 0;
         }
-
     }
     //------------------------------------------------------------------------------------------------------------------ G E T T E R S
     /**
@@ -184,6 +191,9 @@ public class Player extends Rectangle {
      */
     public Rectangle getHitBox() {
         return new Rectangle(x,y,width,height);
+    }
+    public Ghost.Direction get_dir() {
+        return dir;
     }
     //------------------------------------------------------------------------------------------------------------------ S E T T E R S
     /**
