@@ -3,11 +3,9 @@ package com.pacman.model.managers;
 
 import com.pacman.config.Config;
 import com.pacman.map.Map;
-import com.pacman.model.Collectable;
 import com.pacman.model.Ghost;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Random;
 

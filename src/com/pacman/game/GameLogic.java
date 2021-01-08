@@ -3,6 +3,7 @@ package com.pacman.game;
 import com.pacman.config.Config;
 import com.pacman.map.Map;
 import com.pacman.model.Collectable;
+import com.pacman.model.Lives;
 import com.pacman.model.Player;
 import com.pacman.model.managers.CollectableManager;
 import com.pacman.model.managers.GhostManager;
@@ -93,15 +94,20 @@ public class GameLogic {
     /**
      * By how much speed is multiplied after collection of cherries
      */
-    public static double CHERRIES_ACCELERATION_RATE;;
+    public static double CHERRIES_ACCELERATION_RATE;
+    /**
+     * Reference to lives from gamePanel
+     */
+    Lives hearts;
     /**
      Constructor
      */
-    public GameLogic(CollectableManager collectableManager, Player player, Map map, GhostManager ghostManager) {
+    public GameLogic(CollectableManager collectableManager, Player player, Map map, GhostManager ghostManager, Lives hearts) {
         this.collectableManager = collectableManager;
         this.player = player;
         this.map = map;
         this.ghostManager = ghostManager;
+        this.hearts = hearts;
         dotCounter = 0;
         maxDotCounter = map.get_maxDotCounter();
         cupPosition = map.get_cupPosition();
@@ -168,14 +174,14 @@ public class GameLogic {
         }
         // Collision with ghosts
         if(ghostManager.checkCollision(player.getHitBox()) && !isPlayerImmortal) {
-            System.out.println("GameLogic._update: Lives left: " + lives);
             // Set immortality for the moment after respawn
             isPlayerImmortal = true;
             timerImmortality = RESPAWN_IMMORTALITY_TIME;
+            hearts.reduce();
             // Respawn player
             player.set_GridPos(map.get_playerSpawnPosition());
             // If no lives are left change isGameOver to true (LOSE state)
-            if(--lives < 0) {
+            if(--lives <= 0) {
                 GamePanel.isGameOver = GamePanel.GameState.LOSE;
             }
        }
