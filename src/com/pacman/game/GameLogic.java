@@ -1,9 +1,11 @@
 package com.pacman.game;
 
+import com.pacman.config.Config;
 import com.pacman.map.Map;
 import com.pacman.model.Collectable;
 import com.pacman.model.Player;
 import com.pacman.model.managers.CollectableManager;
+import com.pacman.model.managers.GhostManager;
 import com.pacman.ui.GamePanel;
 import com.pacman.util.Vector;
 
@@ -29,6 +31,10 @@ public class GameLogic {
      */
     Map map;
     /**
+     Class needs some reference to GamePanel.ghostManager
+     */
+    GhostManager ghostManager;
+    /**
      Counter of dots collected by player.
      Class keeps track of it, because after player collects all dots
      we need to unlock the cup
@@ -45,21 +51,47 @@ public class GameLogic {
      */
     Vector<Integer> cupPosition;
     /**
+     * How many points player scored
+     */
+    int score;
+    /**
+     * How many retries to complete level player have
+     */
+    int lives;
+    /**
+     * True if player is immortal
+     */
+    boolean isPlayerImmortal;
+    /**
+     * Timer of player immortality
+     */
+    double immortalTimer;
+    /**
+     * How long player is immortal
+     */
+    double IMMORTAL_TIME;
+    /**
      Constructor
      */
-    public GameLogic(CollectableManager collectableManager, Player player, Map map) {
+    public GameLogic(CollectableManager collectableManager, Player player, Map map, GhostManager ghostManager) {
         this.collectableManager = collectableManager;
         this.player = player;
         this.map = map;
+        this.ghostManager = ghostManager;
         dotCounter = 0;
         maxDotCounter = map.get_maxDotCounter();
         cupPosition = map.get_cupPosition();
+        score = 0;
+        lives = Config.LIVES;
+        isPlayerImmortal = false;
+        immortalTimer = 0;
+        IMMORTAL_TIME=2;
     }
     /**
      Checks collision with collectable items and ghost.
      Then take action if such event happens.
      */
-    public void _update() {
+    public void _update(double dt) {
         // Get type of collectable item that player collides in this frame
         // Class CollectableManager itself takes care of removing item after collision
         Collectable.Type type = collectableManager.checkCollision(player.getHitBox(),map);
@@ -82,6 +114,22 @@ public class GameLogic {
                 }
             }
         }
+        if (isPlayerImmortal) {
+            immortalTimer -= dt;
+            if(immortalTimer<0) {
+                isPlayerImmortal = false;
+                System.out.println("You are mortal again!");
+            }
+        }
+        // Collision with ghosts
+       if(ghostManager.checkCollision(player.getHitBox()) && !isPlayerImmortal) {
+           System.out.println("GameLogic._update: Lives left: " + lives);
+           isPlayerImmortal = true;
+           immortalTimer = 2;
+           if(--lives < 0) {
+               GamePanel.isGameOver = GamePanel.GameState.LOSE;
+           }
+       }
     }
     /**
     Sets mapArray around the cup to zeros.
