@@ -11,6 +11,7 @@ import com.pacman.model.managers.GhostManager;
 import com.pacman.ui.GamePanel;
 import com.pacman.util.Vector;
 
+import java.awt.*;
 import java.util.LinkedList;
 
 
@@ -179,6 +180,7 @@ public class GameLogic {
                     timerImmortality = BERRIES_IMMORTALITY_TIME;
                     score += POINTS_FOR_BERRIES;
                     points.increment(POINTS_FOR_BERRIES);
+                    player.set_color(Color.decode("#bf6bff"));
                 }
                 case CUP -> {
                     // Change isGameOver to true (WIN state)
@@ -190,6 +192,7 @@ public class GameLogic {
         if (isPlayerImmortal) {
             if( (timerImmortality -= dt) < 0) {
                 isPlayerImmortal = false;
+                player.set_color(Color.decode("#ffd36b"));
             }
         }
         // Dealing with CHERRIES timers
@@ -212,6 +215,7 @@ public class GameLogic {
             hearts.reduce();
             // Respawn player
             player.set_GridPos(map.get_playerSpawnPosition());
+            player.set_color(Color.decode("#bf6bff"));
             // If no lives are left change isGameOver to true (LOSE state)
             if(--lives <= 0) {
                 GamePanel.isGameOver = GamePanel.GameState.LOSE;
