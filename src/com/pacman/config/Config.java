@@ -102,6 +102,14 @@ public class Config {
      */
     public  static int LIVES;
     /**
+     * Player movement speeed as multiplier of GRID/s
+     */
+    public static int PLAYER_MOVEMENT_SPEED;
+    /**
+     * Player movement speeed as
+     */
+    public static int GHOST_MOVEMENT_SPEED;
+    /**
      Default Constructor
      */
     private Config() {
@@ -123,7 +131,6 @@ public class Config {
         }
         return is;
     }
-
     /**
      Parse config file content to Config class fields
      @param fileName - file to read config from
@@ -151,14 +158,15 @@ public class Config {
         BERRIES_RESPAWN_TIME = Double.parseDouble(properties.getProperty("BERRIES_RESPAWN_TIME"));
         BERRIES_LIFE_TIME = Double.parseDouble(properties.getProperty("BERRIES_LIFE_TIME"));
         LIVES = Integer.parseInt(properties.getProperty("LIVES"));
-
+        PLAYER_MOVEMENT_SPEED = Integer.parseInt(properties.getProperty("PLAYER_MOVEMENT_SPEED"));
+        GHOST_MOVEMENT_SPEED = Integer.parseInt(properties.getProperty("GHOST_MOVEMENT_SPEED"));
         // Compute config values from the one read from file
-        PLAYER_MOVEMENT_SPEED_X = 6*GRID_X;
-        PLAYER_MOVEMENT_SPEED_Y = 6*GRID_Y;
+        PLAYER_MOVEMENT_SPEED_X = PLAYER_MOVEMENT_SPEED*GRID_X;
+        PLAYER_MOVEMENT_SPEED_Y = PLAYER_MOVEMENT_SPEED*GRID_Y;
         PLAYER_SIZE_X = GRID_X;
         PLAYER_SIZE_Y = GRID_Y;
-        GHOST_MOVEMENT_SPEED_X = 4 * GRID_X;
-        GHOST_MOVEMENT_SPEED_Y = 4 * GRID_X;
+        GHOST_MOVEMENT_SPEED_X = GHOST_MOVEMENT_SPEED* GRID_X;
+        GHOST_MOVEMENT_SPEED_Y = GHOST_MOVEMENT_SPEED* GRID_Y;
         GHOST_SIZE_X = GRID_X * 4/5;
         GHOST_SIZE_Y = GRID_Y * 4/5;
         COLLECTABLE_SIZE_X = GRID_X * 3/5;

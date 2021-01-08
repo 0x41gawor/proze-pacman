@@ -101,7 +101,6 @@ public class GhostManager {
     public boolean checkCollision(Rectangle hitBox) {
         for (Ghost ghost : ghostList) {
             if (ghost.checkCollision(hitBox)) {
-                System.out.println("Dotknięto ducha");
                 return true;
             }
         }

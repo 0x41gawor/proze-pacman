@@ -138,7 +138,7 @@ public class GamePanel extends JPanel implements Runnable {
         player._update(dt,map);
         ghostManager._update(dt,map);
         collectableManager._update(dt,map);
-        gameLogic._update();
+        gameLogic._update(dt);
     }
     /**
      Paint the frame.
@@ -228,12 +228,12 @@ public class GamePanel extends JPanel implements Runnable {
             Config.WINDOW_SIZE_Y = screenSize.height;
             Config.GRID_X = Config.WINDOW_SIZE_X / Config.MAP_SIZE_X;
             Config.GRID_Y = Config.WINDOW_SIZE_Y / Config.MAP_SIZE_Y;
-            Config.PLAYER_MOVEMENT_SPEED_X = 6 * Config.GRID_X;
-            Config.PLAYER_MOVEMENT_SPEED_Y = 6 * Config.GRID_Y;
+            Config.PLAYER_MOVEMENT_SPEED_X = Config.PLAYER_MOVEMENT_SPEED * Config.GRID_X;
+            Config.PLAYER_MOVEMENT_SPEED_Y = Config.PLAYER_MOVEMENT_SPEED * Config.GRID_Y;
             Config.PLAYER_SIZE_X = (int)(0.8*Config.GRID_X);
             Config.PLAYER_SIZE_Y = (int)(0.8*Config.GRID_Y);
-            Config.GHOST_MOVEMENT_SPEED_X = 4 * Config.GRID_X;
-            Config.GHOST_MOVEMENT_SPEED_Y = 4 * Config.GRID_Y;
+            Config.GHOST_MOVEMENT_SPEED_X = Config.GHOST_MOVEMENT_SPEED * Config.GRID_X;
+            Config.GHOST_MOVEMENT_SPEED_Y = Config.GHOST_MOVEMENT_SPEED* Config.GRID_Y;
             Config.GHOST_SIZE_X = (int)(0.8*Config.GRID_X);
             Config.GHOST_SIZE_Y = (int)(0.8*Config.GRID_Y);
             Config.COLLECTABLE_SIZE_X = Config.GRID_X * 3/5;

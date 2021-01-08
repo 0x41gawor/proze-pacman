@@ -3,14 +3,11 @@ package com.pacman.game;
 import com.pacman.config.Config;
 import com.pacman.map.Map;
 import com.pacman.model.Collectable;
-import com.pacman.model.Ghost;
 import com.pacman.model.Player;
 import com.pacman.model.managers.CollectableManager;
 import com.pacman.model.managers.GhostManager;
 import com.pacman.ui.GamePanel;
 import com.pacman.util.Vector;
-
-import java.awt.*;
 
 
 /**
@@ -62,6 +59,18 @@ public class GameLogic {
      */
     int lives;
     /**
+     * True if player is immortal
+     */
+    boolean isPlayerImmortal;
+    /**
+     * Timer of player immortality
+     */
+    double immortalTimer;
+    /**
+     * How long player is immortal
+     */
+    double IMMORTAL_TIME;
+    /**
      Constructor
      */
     public GameLogic(CollectableManager collectableManager, Player player, Map map, GhostManager ghostManager) {
@@ -73,13 +82,16 @@ public class GameLogic {
         maxDotCounter = map.get_maxDotCounter();
         cupPosition = map.get_cupPosition();
         score = 0;
-        lives = 3;
+        lives = Config.LIVES;
+        isPlayerImmortal = false;
+        immortalTimer = 0;
+        IMMORTAL_TIME=2;
     }
     /**
      Checks collision with collectable items and ghost.
      Then take action if such event happens.
      */
-    public void _update() {
+    public void _update(double dt) {
         // Get type of collectable item that player collides in this frame
         // Class CollectableManager itself takes care of removing item after collision
         Collectable.Type type = collectableManager.checkCollision(player.getHitBox(),map);
@@ -102,10 +114,19 @@ public class GameLogic {
                 }
             }
         }
+        if (isPlayerImmortal) {
+            immortalTimer -= dt;
+            if(immortalTimer<0) {
+                isPlayerImmortal = false;
+                System.out.println("You are mortal again!");
+            }
+        }
         // Collision with ghosts
-       if(ghostManager.checkCollision(player.getHitBox())) {
+       if(ghostManager.checkCollision(player.getHitBox()) && !isPlayerImmortal) {
            System.out.println("GameLogic._update: Lives left: " + lives);
-           if(--lives <= 0) {
+           isPlayerImmortal = true;
+           immortalTimer = 2;
+           if(--lives < 0) {
                GamePanel.isGameOver = GamePanel.GameState.LOSE;
            }
        }
