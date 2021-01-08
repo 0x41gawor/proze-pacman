@@ -42,6 +42,10 @@ public class Player extends Rectangle {
      Position Y
      */
     double posY;
+    /**
+     Color of player
+     */
+    Color color;
 
     //------------------------------------------------------------------------------------------------------------------ C O N S T R U C T O R
     /**
@@ -52,6 +56,7 @@ public class Player extends Rectangle {
         set_GridPos(pos);
         this.movementSpeedX = movementSpeedX;
         this.movementSpeedY = movementSpeedY;
+        this.color = Color.decode("#ffd36b");
     }
     //------------------------------------------------------------------------------------------------------------------ D R A W
     /**
@@ -59,7 +64,7 @@ public class Player extends Rectangle {
      * Should be called in GamePanel.paint()
      */
     public void draw(Graphics g) {
-        g.setColor(Color.orange);
+        g.setColor(color);
         x = (int)posX-width/2;
         y = (int)posY-height/2;
         g.fillOval(x,y,(int)(width*0.8),(int)(height*0.8));
@@ -204,4 +209,10 @@ public class Player extends Rectangle {
      * movementSpeedY setter used in resizeHandler
      */
     public void set_movementSpeedY(double movementSpeedY) { this.movementSpeedY = movementSpeedY; }
+    /**
+     * color setter used to point out the immortality
+     */
+    public void set_color(Color color) {
+        this.color = color;
+    }
 }
