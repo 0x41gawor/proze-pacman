@@ -51,7 +51,7 @@ public class Collectable extends Rectangle {
     }
     /**
      Check collision with given rectangle
-     <returns>True if hitBox intersects with this object</returns>
+     @return  True if hitBox intersects with this object
      */
     public boolean checkCollision(Rectangle hitBox) {
         return this.intersects(hitBox);

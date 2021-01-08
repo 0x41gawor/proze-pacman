@@ -50,7 +50,7 @@ public class GhostManager {
      * Used to create a single ghost.
      *
      * Random its position (checking if it is not a wall), direction and color.
-     * <returns>Created ghost</returns>
+     * @return Created ghost
      */
     private Ghost ghostFactory(Map map) {
         // Random ghost position

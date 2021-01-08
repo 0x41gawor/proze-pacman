@@ -2,7 +2,6 @@ package com.pacman.app;
 
 import com.pacman.config.Config;
 import com.pacman.ui.GameFrame;
-import com.pacman.util.Vector;
 
 /**
  * Main class for our app

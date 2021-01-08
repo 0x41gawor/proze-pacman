@@ -172,7 +172,7 @@ public class CollectableManager {
      * If none of collectable items intersects with give hitBox method returns
      * the null
      *
-     * <Returns> Collectable.Type or Null</Returns>
+     * @return  Collectable.Type or Null
      */
     public Collectable.Type checkCollision(Rectangle hitBox, Map map) {
         for (Collectable collectable: collectableList) {
