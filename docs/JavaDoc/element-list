@@ -1,3 +1,9 @@
 com.pacman.app
 com.pacman.config
+com.pacman.game
 com.pacman.map
+com.pacman.model
+com.pacman.model.managers
+com.pacman.ui
+com.pacman.ui.util
+com.pacman.util

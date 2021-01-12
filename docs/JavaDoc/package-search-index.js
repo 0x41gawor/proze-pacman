@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.pacman.app"},{"l":"com.pacman.config"},{"l":"com.pacman.map"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.pacman.app"},{"l":"com.pacman.config"},{"l":"com.pacman.game"},{"l":"com.pacman.map"},{"l":"com.pacman.model"},{"l":"com.pacman.model.managers"},{"l":"com.pacman.ui"},{"l":"com.pacman.ui.util"},{"l":"com.pacman.util"}];updateSearchResults();
