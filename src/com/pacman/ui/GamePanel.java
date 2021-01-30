@@ -8,6 +8,7 @@ import com.pacman.model.managers.CollectableManager;
 import com.pacman.model.managers.GhostManager;
 import com.pacman.model.managers.Gun;
 import com.pacman.ui.util.Clock;
+import com.pacman.ui.util.Panel;
 import com.pacman.util.Vector;
 
 import javax.swing.*;
@@ -36,7 +37,7 @@ import java.awt.event.KeyEvent;
  *          - KeyboardHandler
  *          - ResizeHandler
  */
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends Panel implements Runnable {
 
     /**
      Size of a screen
@@ -49,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
      GamePanel constructor creates new thread for gameplay.
      And the GameFrame thread, the parent of this one continues to live alongside.
      */
-    Thread gameThread;
+    //Thread gameThread;
     /**
      Object representing pac-man
      */
@@ -103,7 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
      Default Constructor
      Sets JPanel and run the gameplay thread
      */
-    GamePanel() {
+    GamePanel(Thread thread) {
         // Setting up the Game
         screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
         clock = new Clock();
@@ -123,9 +124,16 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(screenSize);
 
         // Starting thread for gameplay, this will fire run() method
-        gameThread = new Thread(this);
-        gameThread.start();
+        thread = new Thread(this);
+        thread.start();
     }
+
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        this.requestFocusInWindow();
+    }
+
     //------------------------------------------------------------------------------------------------------------------ G A M E   M A I N   L O O P
     /**
      Run method from Runnable interface
@@ -141,8 +149,8 @@ public class GamePanel extends JPanel implements Runnable {
             sleep();
         }
         switch(isGameOver) {
-            case WIN -> System.out.println("Congratulations you have won");
-            case LOSE ->  System.out.println("You Lose");
+            case WIN -> { System.out.println("Congratulations you have won"); StateManager.changeState(2); }
+            case LOSE -> { System.out.println("You Lose"); StateManager.changeState(0); }
         }
     }
     /**
@@ -272,6 +280,7 @@ public class GamePanel extends JPanel implements Runnable {
          * need the same amount of time to cover the distance of the entire map
          */
         private void resizePlayer(Dimension oldScreenSize) {
+            System.out.println("KURWAFS");
             player.setSize((int)((double)Config.PLAYER_SIZE_X/(double)Config.WINDOW_SIZE_X * screenSize.width), (int)((double)Config.PLAYER_SIZE_Y/(double)Config.WINDOW_SIZE_Y * screenSize.height));
             player.set_posX(player.get_posX() / (double)oldScreenSize.width * (double)screenSize.width);
             player.set_posY(player.get_posY() / (double)oldScreenSize.height * (double)screenSize.height);
