@@ -3,12 +3,14 @@ package com.pacman.ui;
 /**
     Each game state is presented as different JPanel.
     States are:
-        - menu
-        - gameplay
-        - highscore
-        - credits
-        - settings
-        - quit
+        - menu 0
+        - gameplay 1
+        - highscores 2
+        - rules 3
+        - settings 4
+        - quit 5
+        - interlevel 6
+        - enter nickname 7
 
     And StateManager manages transitions between them.
  */
@@ -36,13 +38,13 @@ public class StateManager {
      */
     public static void changeState(int sel) {
         switch (sel) {
+            case 0 -> {
+                frame.menu(thread);
+            }
             case 1 -> {
                 frame.game(thread);
             }
-            case 2 -> {
-                frame.menu(thread);
-            }
-            case 0 -> {
+            default -> {
                 System.exit(0);
             }
             }

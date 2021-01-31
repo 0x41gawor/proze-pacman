@@ -3,7 +3,6 @@ package com.pacman.app;
 import com.pacman.config.Config;
 import com.pacman.ui.StateManager;
 
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Main class for our app
@@ -16,6 +15,6 @@ public class App {
 
         Config.parseConfig("config.properties");
         StateManager stateManager = new StateManager();
-        StateManager.changeState(1);
+        StateManager.changeState(0);
     }
 }
