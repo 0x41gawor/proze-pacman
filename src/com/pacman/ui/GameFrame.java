@@ -1,7 +1,6 @@
 package com.pacman.ui;
 
 import com.pacman.config.Config;
-import com.pacman.ui.util.Panel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,18 +24,20 @@ public class GameFrame extends JFrame {
         this.setMinimumSize(new Dimension(100,100));
         this.setLocationRelativeTo(null);
     }
-
+    /**
+     Switch JPanel to GamePanel
+     */
     void game(Thread thread) {
-        //panel = null;
         panel = new GamePanel(thread);
         this.add(panel);
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
     }
-
+    /**
+     Switch JPanel to MenuPanel
+     */
     void menu(Thread thread) {
-        //panel = null;
         panel = new MenuPanel(thread);
         this.add(panel);
         this.pack();
