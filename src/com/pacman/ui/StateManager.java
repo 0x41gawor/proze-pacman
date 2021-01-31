@@ -44,6 +44,9 @@ public class StateManager {
             case 1 -> {
                 frame.game(thread);
             }
+            case 3 -> {
+                frame.rules(thread);
+            }
             default -> {
                 System.exit(0);
             }
