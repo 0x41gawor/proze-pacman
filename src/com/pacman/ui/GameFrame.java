@@ -13,7 +13,7 @@ import java.awt.*;
  */
 public class GameFrame extends JFrame {
 
-    Panel panel;
+    JPanel panel;
     /**
      Default Constructor
      Which as for now creates GamePanel() and the gameplay runs
@@ -32,6 +32,7 @@ public class GameFrame extends JFrame {
         this.add(panel);
         this.pack();
         this.setVisible(true);
+        this.setLocationRelativeTo(null);
     }
 
     void menu(Thread thread) {
@@ -40,5 +41,6 @@ public class GameFrame extends JFrame {
         this.add(panel);
         this.pack();
         this.setVisible(true);
+        this.setLocationRelativeTo(null);
     }
 }

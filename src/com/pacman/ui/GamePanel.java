@@ -37,7 +37,7 @@ import java.awt.event.KeyEvent;
  *          - KeyboardHandler
  *          - ResizeHandler
  */
-public class GamePanel extends Panel implements Runnable {
+public class GamePanel extends JPanel implements Runnable {
 
     /**
      Size of a screen
@@ -280,7 +280,6 @@ public class GamePanel extends Panel implements Runnable {
          * need the same amount of time to cover the distance of the entire map
          */
         private void resizePlayer(Dimension oldScreenSize) {
-            System.out.println("KURWAFS");
             player.setSize((int)((double)Config.PLAYER_SIZE_X/(double)Config.WINDOW_SIZE_X * screenSize.width), (int)((double)Config.PLAYER_SIZE_Y/(double)Config.WINDOW_SIZE_Y * screenSize.height));
             player.set_posX(player.get_posX() / (double)oldScreenSize.width * (double)screenSize.width);
             player.set_posY(player.get_posY() / (double)oldScreenSize.height * (double)screenSize.height);

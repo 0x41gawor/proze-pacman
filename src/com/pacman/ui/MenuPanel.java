@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Scanner;
 
-public class MenuPanel extends Panel implements Runnable {
+public class MenuPanel extends JPanel implements Runnable {
 
     Dimension screenSize;
 
