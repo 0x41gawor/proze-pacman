@@ -12,7 +12,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class App {
 
-    public static void main(String[] args) throws InvocationTargetException, InterruptedException {
+    public static void main(String[] args) {
 
         Config.parseConfig("config.properties");
         StateManager stateManager = new StateManager();
