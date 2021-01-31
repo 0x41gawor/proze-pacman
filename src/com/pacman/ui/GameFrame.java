@@ -12,18 +12,34 @@ import java.awt.*;
  */
 public class GameFrame extends JFrame {
 
-    GamePanel panel;
+    JPanel panel;
     /**
      Default Constructor
      Which as for now creates GamePanel() and the gameplay runs
      */
     public GameFrame() {
-        panel = new GamePanel();
-        this.add(panel);
         this.setTitle(Config.TITLE);
         this.setBackground(Color.black);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(100,100));
+        this.setLocationRelativeTo(null);
+    }
+    /**
+     Switch JPanel to GamePanel
+     */
+    void game(Thread thread) {
+        panel = new GamePanel(thread);
+        this.add(panel);
+        this.pack();
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+    }
+    /**
+     Switch JPanel to MenuPanel
+     */
+    void menu(Thread thread) {
+        panel = new MenuPanel(thread);
+        this.add(panel);
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null);

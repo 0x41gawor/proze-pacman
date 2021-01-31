@@ -18,7 +18,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /**
- * GamePanel class from Swing
+ * JPanel presenting the gameplay
+ *
  *
  * We use it as a container for graphics components during gameplay.
  * Here is the Main Game Loop.
@@ -49,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
      GamePanel constructor creates new thread for gameplay.
      And the GameFrame thread, the parent of this one continues to live alongside.
      */
-    Thread gameThread;
+    //Thread gameThread;
     /**
      Object representing pac-man
      */
@@ -103,17 +104,17 @@ public class GamePanel extends JPanel implements Runnable {
      Default Constructor
      Sets JPanel and run the gameplay thread
      */
-    GamePanel() {
+    GamePanel(Thread thread) {
         // Setting up the Game
         screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
         clock = new Clock();
         isGameOver = GameState.FALSE;
         map = new Map();
-        player = new Player(map.get_playerSpawnPosition(),Config.PLAYER_SIZE_X,Config.PLAYER_SIZE_Y,Config.PLAYER_MOVEMENT_SPEED_X,Config.PLAYER_MOVEMENT_SPEED_Y);
+        player = new Player(map.get_playerSpawnPosition(), Config.PLAYER_SIZE_X, Config.PLAYER_SIZE_Y, Config.PLAYER_MOVEMENT_SPEED_X, Config.PLAYER_MOVEMENT_SPEED_Y);
         ghostManager = new GhostManager(map);
         collectableManager = new CollectableManager(map);
-        lives = new Lives(new Vector<>(0,0), Config.GRID_X, Config.GRID_Y);
-        score = new Score(new Vector<>(18*Config.GRID_X, Config.GRID_Y/2), 15);
+        lives = new Lives(new Vector<>(0, 0), Config.GRID_X, Config.GRID_Y);
+        score = new Score(new Vector<>(18 * Config.GRID_X, Config.GRID_Y / 2), 15);
         gun = new Gun();
         gameLogic = new GameLogic(collectableManager, player, map, ghostManager, lives, score, gun);
         // Setting up JPanel
@@ -123,9 +124,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(screenSize);
 
         // Starting thread for gameplay, this will fire run() method
-        gameThread = new Thread(this);
-        gameThread.start();
+        thread = new Thread(this);
+        thread.start();
     }
+
     //------------------------------------------------------------------------------------------------------------------ G A M E   M A I N   L O O P
     /**
      Run method from Runnable interface
@@ -141,8 +143,8 @@ public class GamePanel extends JPanel implements Runnable {
             sleep();
         }
         switch(isGameOver) {
-            case WIN -> System.out.println("Congratulations you have won");
-            case LOSE ->  System.out.println("You Lose");
+            case WIN -> { System.out.println("Congratulations you have won"); StateManager.changeState(2); }
+            case LOSE -> { System.out.println("You Lose"); StateManager.changeState(0); }
         }
     }
     /**
@@ -194,6 +196,12 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
     //------------------------------------------------------------------------------------------------------------------ A U X   G A M E
+    /**
+     * Set game into pause mode or resume the game
+     */
+    public void pause() {
+        isPause = !isPause;
+    }
     //------------------------------------------------------------------------------------------------------------------ A U X   S W I N G
     /**
      Swing framework calls this method for GameFrame in pack(),
@@ -203,10 +211,14 @@ public class GamePanel extends JPanel implements Runnable {
         return screenSize;
     }
     /**
-     * Set game into pause mode or resume the game
+     Swing method
+     We needed to add because new Panel need to be notified before
+     handling keyboard and resized events.
      */
-    public void pause() {
-        isPause = !isPause;
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        this.requestFocusInWindow();
     }
     //------------------------------------------------------------------------------------------------------------------ N E S T E D   C L A S S E S
     /**
