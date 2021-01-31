@@ -6,7 +6,7 @@ import com.pacman.model.*;
 import com.pacman.model.managers.CollectableManager;
 import com.pacman.model.managers.GhostManager;
 import com.pacman.model.managers.Gun;
-import com.pacman.ui.GamePanel;
+import com.pacman.ui.jpanels.GamePanel;
 import com.pacman.util.Vector;
 
 import java.awt.*;
