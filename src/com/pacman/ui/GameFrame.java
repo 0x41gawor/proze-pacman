@@ -1,6 +1,8 @@
 package com.pacman.ui;
 
 import com.pacman.config.Config;
+import com.pacman.ui.jpanels.GamePanel;
+import com.pacman.ui.jpanels.MenuPanel;
 
 import javax.swing.*;
 import java.awt.*;

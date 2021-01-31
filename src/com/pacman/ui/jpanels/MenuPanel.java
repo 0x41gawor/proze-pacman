@@ -1,6 +1,7 @@
-package com.pacman.ui;
+package com.pacman.ui.jpanels;
 
 import com.pacman.config.Config;
+import com.pacman.ui.StateManager;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package com.pacman.ui;
+package com.pacman.ui.jpanels;
 
 import com.pacman.config.Config;
 import com.pacman.game.GameLogic;
@@ -7,6 +7,7 @@ import com.pacman.model.*;
 import com.pacman.model.managers.CollectableManager;
 import com.pacman.model.managers.GhostManager;
 import com.pacman.model.managers.Gun;
+import com.pacman.ui.StateManager;
 import com.pacman.ui.util.Clock;
 import com.pacman.util.Vector;
 
@@ -104,7 +105,7 @@ public class GamePanel extends JPanel implements Runnable {
      Default Constructor
      Sets JPanel and run the gameplay thread
      */
-    GamePanel(Thread thread) {
+    public GamePanel(Thread thread) {
         // Setting up the Game
         screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
         clock = new Clock();
