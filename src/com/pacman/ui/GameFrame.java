@@ -3,6 +3,7 @@ package com.pacman.ui;
 import com.pacman.config.Config;
 import com.pacman.ui.jpanels.GamePanel;
 import com.pacman.ui.jpanels.MenuPanel;
+import com.pacman.ui.jpanels.RulesPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +42,13 @@ public class GameFrame extends JFrame {
      */
     void menu(Thread thread) {
         panel = new MenuPanel(thread);
+        this.add(panel);
+        this.pack();
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+    }
+    void rules(Thread thread) {
+        panel = new RulesPanel(thread);
         this.add(panel);
         this.pack();
         this.setVisible(true);
