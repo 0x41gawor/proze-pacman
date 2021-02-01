@@ -51,7 +51,7 @@ public class Map {
         dotPositions = new ArrayList<>();
         ghostNumber = 0;
         maxDotCounter = 0;
-        loadFromFile("levels/level1.txt");
+        loadFromFile("levels/level3.txt");
     }
     /**
      * Loads map from file
