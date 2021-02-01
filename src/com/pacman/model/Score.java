@@ -22,10 +22,11 @@ public class Score {
      * Font of string
      */
     Font font;
-    public Score (Vector<Integer> pos,  int size) {
+    public Score (Vector<Integer> pos,  int size, int points) {
         this.pos = pos;
         this.size = size;
         font = new Font(Font.MONOSPACED, Font.BOLD, size);
+        this.points = points;
     }
     /**
      * Draw score

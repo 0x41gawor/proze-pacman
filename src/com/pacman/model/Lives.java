@@ -25,11 +25,11 @@ public class Lives {
     /**
      * Constructor
      */
-    public Lives (Vector<Integer> position,int  width,int height) {
+    public Lives (Vector<Integer> position,int  width,int height, int lives) {
         this.position = position;
         this.width = width;
         this.height = height;
-        lives = Config.LIVES;
+        this.lives = lives;
     }
     /**
      * Draw different number of hearts depending on value of parametr lives
@@ -52,5 +52,8 @@ public class Lives {
     public void resize(Dimension screenSize) {
          width =  Config.GRID_X;
          height =  Config.GRID_Y;
+    }
+    public int get_lives() {
+        return this.lives;
     }
 }

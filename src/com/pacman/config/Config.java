@@ -145,6 +145,10 @@ public class Config {
      * Bullet speed as mulitiplier of GRID
      */
     public static int BULLET_SPEED;
+    /**
+     * Number of levels
+     */
+    public static int NUMBER_OF_LEVELS;
 
     /**
      Default Constructor
@@ -206,6 +210,7 @@ public class Config {
         POINTS_FOR_GHOST_KILL = Integer.parseInt(properties.getProperty("POINTS_FOR_GHOST_KILL"));
         AMMO_FOR_PICKING_GUN = Integer.parseInt(properties.getProperty("AMMO_FOR_PICKING_GUN"));
         BULLET_SPEED = Integer.parseInt(properties.getProperty("BULLET_SPEED"));
+        NUMBER_OF_LEVELS = Integer.parseInt(properties.getProperty("NUMBER_OF_LEVELS"));
 
         // Compute config values from the one read from file
         PLAYER_MOVEMENT_SPEED_X = PLAYER_MOVEMENT_SPEED*GRID_X;

@@ -105,17 +105,17 @@ public class GamePanel extends JPanel implements Runnable {
      Default Constructor
      Sets JPanel and run the gameplay thread
      */
-    public GamePanel(Thread thread) {
+    public GamePanel(Thread thread, int nextLevel, int scoreFromPreviousLevel, int livesLeft) {
         // Setting up the Game
         screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
         clock = new Clock();
         isGameOver = GameState.FALSE;
-        map = new Map();
+        map = new Map(nextLevel);
         player = new Player(map.get_playerSpawnPosition(), Config.PLAYER_SIZE_X, Config.PLAYER_SIZE_Y, Config.PLAYER_MOVEMENT_SPEED_X, Config.PLAYER_MOVEMENT_SPEED_Y);
         ghostManager = new GhostManager(map);
         collectableManager = new CollectableManager(map);
-        lives = new Lives(new Vector<>(0, 0), Config.GRID_X, Config.GRID_Y);
-        score = new Score(new Vector<>(18 * Config.GRID_X, Config.GRID_Y / 2), 15);
+        lives = new Lives(new Vector<>(0, 0), Config.GRID_X, Config.GRID_Y, livesLeft);
+        score = new Score(new Vector<>(18 * Config.GRID_X, Config.GRID_Y / 2), 15, scoreFromPreviousLevel);
         gun = new Gun();
         gameLogic = new GameLogic(collectableManager, player, map, ghostManager, lives, score, gun);
         // Setting up JPanel
@@ -144,8 +144,22 @@ public class GamePanel extends JPanel implements Runnable {
             sleep();
         }
         switch(isGameOver) {
-            case WIN -> { System.out.println("Congratulations you have won"); StateManager.changeState(1); }
-            case LOSE -> { System.out.println("You Lose"); StateManager.setScore(score.get_points()); StateManager.changeState(7);  }
+            case WIN -> {
+                StateManager.nextLevel+=1;
+                StateManager.setScore(score.get_points());
+                StateManager.lives = lives.get_lives() + 1;
+                if(StateManager.nextLevel > StateManager.numberOfLevels) {
+                    StateManager.nextLevel = 1;
+                    StateManager.changeState(7);
+                }
+                else{
+                    StateManager.changeState(1);
+                }
+            }
+            case LOSE -> {
+                StateManager.setScore(score.get_points()); StateManager.changeState(7);
+                StateManager.lives = Config.LIVES;
+            }
         }
     }
     /**

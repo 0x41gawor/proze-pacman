@@ -1,5 +1,7 @@
 package com.pacman.ui;
 
+import com.pacman.config.Config;
+
 /**
     Each game state is presented as different JPanel.
     States are:
@@ -25,8 +27,23 @@ public class StateManager {
      because event listeners are attached to a thread, not a Panel
      */
     static Thread thread;
-
+    /**
+     Score for the EnterNickNamePanel and GamePanel for the next level
+     */
     static int score;
+    /**
+     * Number of levels
+     */
+    public static int numberOfLevels;
+    /**
+     * Next level that should be passed to GamePanel
+     */
+    public static int nextLevel;
+    /**
+     * Lives left for one game
+     */
+    public static int lives;
+
     /**
      Default constructor
      */
@@ -34,6 +51,9 @@ public class StateManager {
         frame = new GameFrame();
         thread = new Thread();
         score = 0;
+        nextLevel = 1;
+        numberOfLevels = Config.NUMBER_OF_LEVELS;
+        lives = Config.LIVES;
     }
     /**
      Each JPanel has its run() method.
@@ -44,7 +64,7 @@ public class StateManager {
                 frame.menu(thread);
             }
             case 1 -> {
-                frame.game(thread);
+                frame.game(thread, nextLevel, score, lives);
             }
             case 2 -> {
                 frame.highscores(thread);
@@ -72,4 +92,5 @@ public class StateManager {
     public static void setScore(int sc) {
         score = sc;
     }
+
 }
