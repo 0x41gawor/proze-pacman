@@ -93,6 +93,7 @@ public class EnterNickNamePanel extends JPanel{
                     ioException.printStackTrace();
                 }
                 sortHighscores("highscores.txt");
+                StateManager.setScore(0);
                 StateManager.changeState(0);
             }
             inputEngine(e);
@@ -216,7 +217,6 @@ public class EnterNickNamePanel extends JPanel{
                 maxIndex = topScorers.size();
             }
             topScorers = topScorers.subList(0,maxIndex);
-            System.out.println(topScorers.size());
             try{
                FileWriter writer = new FileWriter("highscores.txt");
                 for (TopScorer ts: topScorers) {

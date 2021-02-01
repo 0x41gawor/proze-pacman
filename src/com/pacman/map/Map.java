@@ -46,12 +46,12 @@ public class Map {
     /**
      Default constructor
      */
-    public Map(){
+    public Map(int level){
         cupPosition = new Vector<Integer>(0,0);
         dotPositions = new ArrayList<>();
         ghostNumber = 0;
         maxDotCounter = 0;
-        loadFromFile("levels/level1.txt");
+        loadFromFile("levels/level" + level + ".txt");
     }
     /**
      * Loads map from file

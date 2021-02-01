@@ -39,8 +39,8 @@ public class GameFrame extends JFrame {
     /**
      Switch JPanel to GamePanel
      */
-    void game(Thread thread) {
-        panel = new GamePanel(thread);
+    void game(Thread thread, int nextLevel, int score, int lives) {
+        panel = new GamePanel(thread, nextLevel, score, lives);
         this.add(panel);
         this.pack();
         this.setVisible(true);
