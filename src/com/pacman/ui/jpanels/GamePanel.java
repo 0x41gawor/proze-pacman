@@ -153,7 +153,7 @@ public class GamePanel extends JPanel implements Runnable {
                     StateManager.changeState(7);
                 }
                 else{
-                    StateManager.changeState(1);
+                    StateManager.changeState(6);
                 }
             }
             case LOSE -> {

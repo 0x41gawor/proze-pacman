@@ -14,14 +14,15 @@ public class InterLevelPanel extends JPanel {
     /**
      * Deafault Constructor
      */
-    public InterLevelPanel(int levelNumber) {
+    public InterLevelPanel(int nextLevel) {
         Dimension screenSize = new Dimension(Config.WINDOW_SIZE_X, Config.WINDOW_SIZE_Y);
         this.setPreferredSize(screenSize);
         Image backgroundImage;
-        switch (levelNumber) {
+        switch (nextLevel) {
           case 1 ->  backgroundImage = ImageFactory.getImage(ImageFactory.Images.INTERLEVEL1);
           case 2 ->   backgroundImage = ImageFactory.getImage(ImageFactory.Images.INTERLEVEL2);
-          default  ->   backgroundImage = ImageFactory.getImage(ImageFactory.Images.INTERLEVEL3);
+          case 3 ->   backgroundImage = ImageFactory.getImage(ImageFactory.Images.INTERLEVEL3);
+          default  -> backgroundImage = ImageFactory.getImage(ImageFactory.Images.INTERLEVEL4);
         }
         JLabel backgroundLabel = new JLabel(backgroundImage.get_imageIcon());
         this.add(backgroundLabel);
@@ -44,7 +45,7 @@ public class InterLevelPanel extends JPanel {
     public class KeyboardHandler extends KeyAdapter {
         public void keyPressed(KeyEvent e){
             if(e.getKeyCode() == KeyEvent.VK_ENTER){
-               StateManager.changeState(3);
+               StateManager.changeState(1);
                System.out.println("elo 420");
             }
         }

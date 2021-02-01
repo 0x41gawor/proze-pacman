@@ -86,4 +86,11 @@ public class GameFrame extends JFrame {
         this.setVisible(true);
         this.setLocationRelativeTo(null);
     }
+    void interlevel(int nextLevel) {
+        panel = new InterLevelPanel(nextLevel);
+        this.add(panel);
+        this.pack();
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+    }
 }
