@@ -2,6 +2,7 @@ package com.pacman.ui;
 
 import com.pacman.config.Config;
 import com.pacman.ui.jpanels.*;
+import com.pacman.ui.jpanels.InterLevelPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,6 +71,16 @@ public class GameFrame extends JFrame {
      */
     void enterNickName(int score) {
         panel = new EnterNickNamePanel(score);
+        this.add(panel);
+        this.pack();
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+    }
+    /**
+     Switch JPanel to SettingsPanel
+     */
+    void settings() {
+        panel = new SettingsPanel();
         this.add(panel);
         this.pack();
         this.setVisible(true);

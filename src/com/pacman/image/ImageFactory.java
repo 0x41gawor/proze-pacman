@@ -2,7 +2,7 @@ package com.pacman.image;
 
 public class ImageFactory {
 
-    public enum Images {MENU_BG, MENU_POINTER, RULES, INTERLEVEL1, INTERLEVEL2, INTERLEVEL3, ENTERYOURNICKNAME_BG, HIGHSCORES_BG};
+    public enum Images {MENU_BG, MENU_POINTER, RULES, INTERLEVEL1, INTERLEVEL2, INTERLEVEL3, ENTERYOURNICKNAME_BG, HIGHSCORES_BG, SETTINGS};
 
     public static Image getImage(Images image)
     {
@@ -15,6 +15,7 @@ public class ImageFactory {
             case INTERLEVEL2 -> "res/img/interlevel2.png";
             case INTERLEVEL3 -> "res/img/interlevel3.png";
             case HIGHSCORES_BG -> "res/img/highscores.png";
+            case SETTINGS ->    "res/img/settings.png";
         };
 
         return new Image(filepath);

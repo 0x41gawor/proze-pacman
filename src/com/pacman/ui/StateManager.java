@@ -52,6 +52,9 @@ public class StateManager {
             case 3 -> {
                 frame.rules(thread);
             }
+            case 4 -> {
+                frame.settings();
+            }
             case 7 -> {
                 frame.enterNickName(score);
             }
