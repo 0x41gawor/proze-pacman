@@ -1,6 +1,7 @@
 package com.pacman.map;
 
 import com.pacman.config.Config;
+import com.pacman.ui.StateManager;
 import com.pacman.util.Vector;
 
 import java.awt.*;
@@ -50,7 +51,7 @@ public class Map {
         dotPositions = new ArrayList<>();
         ghostNumber = 0;
         maxDotCounter = 0;
-        loadFromFile("level1.txt");
+        loadFromFile("levels/level1.txt");
     }
     /**
      * Loads map from file
@@ -96,6 +97,8 @@ public class Map {
         }
         catch(IOException e) {
                 e.printStackTrace();
+                System.out.println("No level file");
+                StateManager.changeState(0);
         }
     }
     /**
