@@ -52,4 +52,10 @@ public class Score {
         pos.x = (Config.MAP_SIZE_X-3) * Config.GRID_X;
         pos.y = Config.GRID_Y/2;
     }
+    /**
+     * points getter
+     */
+    public int get_points() {
+        return points;
+    }
 }
