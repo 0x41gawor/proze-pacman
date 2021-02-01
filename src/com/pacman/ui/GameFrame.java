@@ -1,11 +1,7 @@
 package com.pacman.ui;
 
 import com.pacman.config.Config;
-import com.pacman.ui.jpanels.EnterNickNamePanel;
-import com.pacman.ui.jpanels.GamePanel;
-import com.pacman.ui.jpanels.InterLevelPanel;
-import com.pacman.ui.jpanels.MenuPanel;
-import com.pacman.ui.jpanels.RulesPanel;
+import com.pacman.ui.jpanels.*;
 import com.pacman.ui.jpanels.InterLevelPanel;
 
 import javax.swing.*;
@@ -44,7 +40,7 @@ public class GameFrame extends JFrame {
      Switch JPanel to MenuPanel
      */
     void menu(Thread thread) {
-        panel = new MenuPanel(thread);
+        panel = new HighscorePanel(thread);
         this.add(panel);
         this.pack();
         this.setVisible(true);
