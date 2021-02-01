@@ -144,8 +144,8 @@ public class GamePanel extends JPanel implements Runnable {
             sleep();
         }
         switch(isGameOver) {
-            case WIN -> { System.out.println("Congratulations you have won"); StateManager.changeState(2); }
-            case LOSE -> { System.out.println("You Lose"); StateManager.changeState(0); }
+            case WIN -> { System.out.println("Congratulations you have won"); StateManager.changeState(1); }
+            case LOSE -> { System.out.println("You Lose"); StateManager.setScore(score.get_points()); StateManager.changeState(7);  }
         }
     }
     /**

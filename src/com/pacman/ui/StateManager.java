@@ -25,12 +25,15 @@ public class StateManager {
      because event listeners are attached to a thread, not a Panel
      */
     static Thread thread;
+
+    static int score;
     /**
      Default constructor
      */
     public StateManager() {
         frame = new GameFrame();
         thread = new Thread();
+        score = 0;
     }
     /**
      Each JPanel has its run() method.
@@ -47,9 +50,21 @@ public class StateManager {
             case 3 -> {
                 frame.rules(thread);
             }
+            case 7 -> {
+                frame.enterNickName(score);
+            }
             default -> {
                 System.exit(0);
             }
             }
+    }
+    /**
+     * Used to set score from GamePanel, that will be later displayed
+     * in the EnterNickNamePanel
+     *
+     * @param sc - score passed from GamePanel to EnterNickNamePanel
+     */
+    public static void setScore(int sc) {
+        score = sc;
     }
 }
