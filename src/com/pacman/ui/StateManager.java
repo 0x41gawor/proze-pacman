@@ -37,7 +37,6 @@ public class StateManager {
     }
     /**
      Each JPanel has its run() method.
-     When state is
      */
     public static void changeState(int sel) {
         switch (sel) {
@@ -46,6 +45,9 @@ public class StateManager {
             }
             case 1 -> {
                 frame.game(thread);
+            }
+            case 2 -> {
+                frame.highscores(thread);
             }
             case 3 -> {
                 frame.rules(thread);
