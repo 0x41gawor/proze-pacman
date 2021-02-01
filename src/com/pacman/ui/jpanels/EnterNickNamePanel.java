@@ -4,14 +4,17 @@ import com.pacman.config.Config;
 import com.pacman.image.Image;
 import com.pacman.image.ImageFactory;
 import com.pacman.ui.StateManager;
+import com.pacman.ui.jpanels.model.SortByPoints;
+import com.pacman.ui.jpanels.model.TopScorer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class EnterNickNamePanel extends JPanel{
     /**
@@ -77,10 +80,10 @@ public class EnterNickNamePanel extends JPanel{
         public void keyPressed(KeyEvent e) {
             // If we press VK_ENTER save score to file and change state to main menu
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                FileWriter fw;
                 try {
-                    fw = new FileWriter("highscores.txt", true);
+                    FileWriter fw = new FileWriter("highscores.txt", true);
                     BufferedWriter bw = new BufferedWriter(fw);
+                    //bw.newLine();
                     bw.write(nickNameText);
                     bw.newLine();
                     bw.write(scoreText);
@@ -89,6 +92,7 @@ public class EnterNickNamePanel extends JPanel{
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
+                sortHighscores("highscores.txt");
                 StateManager.changeState(0);
             }
             inputEngine(e);
@@ -146,6 +150,8 @@ public class EnterNickNamePanel extends JPanel{
                 nickNameText += "W";
             }else if(e.getKeyCode() == KeyEvent.VK_Q) {
                 nickNameText += "Q";
+            }else if(e.getKeyCode() == KeyEvent.VK_X) {
+                nickNameText += "X";
             } else if(e.getKeyCode() == KeyEvent.VK_Y) {
                 nickNameText += "Y";
             }else if(e.getKeyCode() == KeyEvent.VK_Z) {
@@ -176,6 +182,51 @@ public class EnterNickNamePanel extends JPanel{
         }
         public void keyReleased(KeyEvent e) {
 
+        }
+        private void sortHighscores(String filename){
+            java.util.List<String> names = new ArrayList<>();
+            List<Integer> points = new ArrayList<>();
+            List<TopScorer> topScorers = new ArrayList<>();
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+                String line = "";
+                int i = 0;
+                while(line!=null) {
+                    line= reader.readLine();
+                    if(line != null)
+                    {
+                        if(i++ % 2 == 0) {
+                            names.add(line);
+                        }
+                        else {
+                            points.add(Integer.parseInt(line));
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            for(int i = 0; i< Math.min(names.size(), points.size()); i++) {
+                topScorers.add(new TopScorer(names.get(i), points.get(i)));
+            }
+            Collections.sort(topScorers, new SortByPoints());
+            int maxIndex = 10;
+            if(topScorers.size() < 10){
+                maxIndex = topScorers.size();
+            }
+            topScorers = topScorers.subList(0,maxIndex);
+            System.out.println(topScorers.size());
+            try{
+               FileWriter writer = new FileWriter("highscores.txt");
+                for (TopScorer ts: topScorers) {
+                    writer.write(ts.name + "\n");
+                    writer.write(ts.points + "\n");
+                }
+               writer.close();
+            } catch (IOException e) {
+               e.printStackTrace();
+            }
         }
     }
 }

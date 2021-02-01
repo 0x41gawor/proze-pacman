@@ -2,7 +2,6 @@ package com.pacman.ui;
 
 import com.pacman.config.Config;
 import com.pacman.ui.jpanels.*;
-import com.pacman.ui.jpanels.InterLevelPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +26,16 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
     }
     /**
+     Switch JPanel to MenuPanel
+     */
+    void menu(Thread thread) {
+        panel = new MenuPanel(thread);
+        this.add(panel);
+        this.pack();
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+    }
+    /**
      Switch JPanel to GamePanel
      */
     void game(Thread thread) {
@@ -37,9 +46,9 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
     }
     /**
-     Switch JPanel to MenuPanel
+     Switch JPanel to highscoresPanel
      */
-    void menu(Thread thread) {
+    void highscores(Thread thread) {
         panel = new HighscorePanel(thread);
         this.add(panel);
         this.pack();

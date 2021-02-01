@@ -60,6 +60,10 @@ public class HighscorePanel extends JPanel implements Runnable {
         thread = new Thread(this);
         thread.start();
     }
+    /**
+     Run method from Runnable interface
+     Contains the GAME MAIN LOOP
+     */
     @Override
     public void run(){
         double dt;
@@ -110,8 +114,8 @@ public class HighscorePanel extends JPanel implements Runnable {
      Load Highscore from file
      */
     private void LoadHighscoreFromFile(String filename) {
-        List<String> names = new ArrayList<String>();
-        List<Integer> points = new ArrayList<Integer>();
+        List<String> names = new ArrayList<>();
+        List<Integer> points = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
 
