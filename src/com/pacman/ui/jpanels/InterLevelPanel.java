@@ -46,7 +46,6 @@ public class InterLevelPanel extends JPanel {
         public void keyPressed(KeyEvent e){
             if(e.getKeyCode() == KeyEvent.VK_ENTER){
                StateManager.changeState(1);
-               System.out.println("elo 420");
             }
         }
     }
