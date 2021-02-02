@@ -46,7 +46,6 @@ public class RulesPanel extends JPanel implements Runnable {
     public void run(){
         double dt;
         dt = clock.restart();
-        System.out.println("costam");
         while(!isClicked) {
             _update(dt);
             repaint();

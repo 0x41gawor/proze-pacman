@@ -43,7 +43,6 @@ public class KeyboardHandler extends KeyAdapter {
     public void keyPressed(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
             StateManager.changeState(0);
-            System.out.println("elo 420");
         }
     }
 }
