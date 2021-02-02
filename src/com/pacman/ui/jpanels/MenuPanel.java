@@ -89,7 +89,7 @@ public class MenuPanel extends JPanel implements Runnable {
             sleep();
         }
             int nextState = switch (selection) {
-                case 1 -> 1;
+                case 1 -> 6;
                 case 2 -> 2;
                 case 3 -> 3;
                 case 4 -> 4;

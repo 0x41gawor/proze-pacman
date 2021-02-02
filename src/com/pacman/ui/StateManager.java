@@ -75,6 +75,9 @@ public class StateManager {
             case 4 -> {
                 frame.settings();
             }
+            case 6 -> {
+                frame.interlevel(nextLevel);
+            }
             case 7 -> {
                 frame.enterNickName(score);
             }
